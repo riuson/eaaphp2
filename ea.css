@@ -1,0 +1,23 @@
+div.header {
+	background-color:#717dc9;
+	min-width:600px;
+	height:100px
+}
+div.left_col {
+	background-color:#dddddd;
+	border-right:2px dashed #717dc9;
+	width:198px;
+	height:400px;
+	float:left
+}
+div.right_col {
+	background-color:#dddddd;
+	height:400px;
+	min-width:380px 
+	max-width:3800px;
+	margin-left:200px;
+	padding-left:20px
+}
+body {
+	background-color:black;
+}
