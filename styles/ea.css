@@ -1,0 +1,45 @@
+/*
+ === block's positioning ===
+*/
+@import "ea_header.css";
+@import "ea_menu.css";
+@import "ea_content.css";
+@import "ea_common.css";
+
+body {
+	background-color:#1A1A1A;
+	color: white;
+	margin: 0;
+	padding: 0;
+	font: 10pt Arial, Helvetica, sans-serif; /* Шрифт на веб-странице */
+}
+/* header block */
+div.header {
+	background-color:#717dc9;
+	min-width:600px;
+	height:50px
+	color: #fff;
+	padding: 10px;
+}
+/* menu block */
+div.menu {
+	/*border-right:2px dotted #717dc9;*/
+	width:198px;
+	height:400px;
+	float:left
+}
+/* content block */
+div.content {
+	height:400px;
+	margin-left:200px;
+	padding-left:20px;
+	float: none
+}
+/* footer block */
+div.footer {
+	background: #333;
+	padding: 5px;
+	color: #fff;
+	clear: left; /* disable float */
+}
+
