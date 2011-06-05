@@ -7,6 +7,7 @@
 	<body>
 		<div id="main">
 			<div id="header" class="header"><p>Avalon Guards's EA Site</p></div>
+			<div id="status" class="status">EVE server: Online, 28984 pilots<br/>Sun 5 Jun 2011 4:44:19</div>
 			<div id="menu" class="menu">
 				<p>Menu</p>
 				<ul>
