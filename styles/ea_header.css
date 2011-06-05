@@ -8,7 +8,7 @@ div.header {
 	/* For Internet Explorer 8 */
 	-ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorstr=#FF0000FF, endColorstr=#1A1A1A)";
 }
-.header p {
+.header{
 	font: bold italic 120% serif;
 }
 div.status {
