@@ -6,6 +6,7 @@
 		<title>#title#</title>
 		<meta http-equiv=\"Content-Type\" content=\"text/html; charset=utf-8\" />
 		<link media=\"screen\" rel=\"stylesheet\" href=\"styles/ea.css\" type=\"text/css\">
+		<script type=\"text/javascript\" src=\"scripts/jquery-1.6.1.min.js\"></script>
 	</head>
 	<body>
 		<div id=\"main\">
@@ -17,6 +18,7 @@
 				&copy; 2011 <a href=\"mailto:riuson(a)gmail(dot)com\">riuson</a>
 			</div>
 		</div>
+		<script>#script#</script>
 	</body>
 </html>";
 
