@@ -7,6 +7,8 @@ function getMenuContent($menuName) {
 		array_push($modes, $filename);
 	}
 
+	// build menu from mode_*.php files
+	// href is mode name, text is mode title
 	$result = "<p>Menu</p>
 		<ul>";
 	foreach ($modes as $filename) {

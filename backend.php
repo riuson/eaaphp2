@@ -1,6 +1,7 @@
 <?php
 
 //print_r($_POST);
+// process mode request
 if (isset($_POST["mode"]) && !empty($_POST["mode"])) {
 	$mode = $_POST["mode"];
 
@@ -25,10 +26,14 @@ if (isset($_POST["mode"]) && !empty($_POST["mode"])) {
 	} else {
 		echo "$mode incorrect mode";
 	}
-} else if (isset($_POST["status"])) {
+} else
+// process status request
+if (isset($_POST["status"])) {
 	include_once "classes/status.php";
 	echo getStatusContent();
-} else if (isset($_POST["menu"]) && !empty($_POST["menu"])) {
+} else
+// process menu request
+if (isset($_POST["menu"]) && !empty($_POST["menu"])) {
 	include_once "classes/menu.php";
 	echo getMenuContent($_POST["menu"]);
 } else {
