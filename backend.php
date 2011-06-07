@@ -25,6 +25,9 @@ if (isset($_POST["mode"]) && !empty($_POST["mode"])) {
 	} else {
 		echo "$mode incorrect mode";
 	}
+} else if (isset($_POST["status"])) {
+	include_once "classes/status.php";
+	echo getStatusContent();
 } else if (isset($_POST["menu"]) && !empty($_POST["menu"])) {
 	include_once "classes/menu.php";
 	echo getMenuContent($_POST["menu"]);

@@ -18,7 +18,7 @@ class Page {
 						type: \"POST\",
 						url: \"backend.php\",
 						cache: false,
-						data: \"mode=status\",
+						data: \"status=get\",
 						success: function(html) {
 							$(\"#status\").html(html);
 							$(\"#status a\").bind(\"click\", updateStatus);
