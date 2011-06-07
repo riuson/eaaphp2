@@ -1,7 +1,11 @@
 <?php
 
-function getModeContent() {
-	return "
+$modeTitle = "About";
+
+if (!function_exists('getModeContent')) {
+
+	function getModeContent() {
+		return "
 			<p class='content_header'>About</p>
 			<p>Used documentation:</p>
 			<ul>
@@ -10,5 +14,7 @@ function getModeContent() {
 				<li><a href='http://htmlbook.ru/'>HTML/CSS handbook</a></li>
 			</ul>
 			Project repository at <a href='https://github.com/riuson/eaaphp2'>github</a>";
+	}
+
 }
 ?>
