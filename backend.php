@@ -1,7 +1,7 @@
 <?php
 
 //print_r($_POST);
-if (isset($_POST["mode"])) {
+if (isset($_POST["mode"]) && !empty($_POST["mode"])) {
 	$mode = $_POST["mode"];
 
 	// check mode name, contains only letters, not more 20
@@ -20,8 +20,12 @@ if (isset($_POST["mode"])) {
 			include_once "$modefile";
 			echo getModeContent();
 		} else {
-			echo $modefile;
+			echo "$mode not found";
 		}
+	} else {
+		echo "$mode incorrect mode";
 	}
+} else {
+	echo "bad request";
 }
 ?>
