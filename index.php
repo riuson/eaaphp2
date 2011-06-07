@@ -1,6 +1,7 @@
 <?php
-	include_once 'classes/page.php';
-	$template = "
+
+include_once 'classes/page.php';
+$template = "
 <html>
 	<head>
 		<title>#title#</title>
@@ -22,6 +23,6 @@
 	</body>
 </html>";
 
-	$p = new Page();
-	$p->writeAll($template);
+$p = new Page();
+$p->writeAll($template);
 ?>
