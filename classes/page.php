@@ -10,18 +10,6 @@ class Page {
 		return "Avalon Guards's EA Site";
 	}
 
-	public function getMenu() {
-		return "
-                        <p>Menu</p>
-                        <ul>
-                                <li><a href='about'>About</a></li>
-                                <li class='disabled'>Visitors</li>
-                                <li><a href='Api_Errors'>API Errors</a></li>
-                                <li><a href='Api_FacWarTopStats'>Fractional wars</a></li>
-                                <li><a href='Api_Conversion'>Names/Id conversion</a></li>
-                        </ul>";
-	}
-
 	public function getScripts() {
 		return "
 				function updateStatus()
@@ -36,6 +24,21 @@ class Page {
 							$(\"#status a\").bind(\"click\", updateStatus);
 						}
 					});
+					return false;
+				}
+				function updateMenu()
+				{
+					$.ajax({
+						type: \"POST\",
+						url: \"backend.php\",
+						cache: false,
+						data: \"menu=\" + $(this).attr('href'),
+						success: function(html) {
+							$(\"#menu\").html(html);
+							$(\"#menu a\").bind(\"click\", updateMenu);
+						}
+					});
+					loadContent($(this).attr('href'));
 					return false;
 				}
 				function loadContent(modeName)
@@ -57,17 +60,22 @@ class Page {
 					updateStatus();
 					loadContent('about');
 
-					$('#menu a').click(function()
-					{
-						loadContent($(this).attr('href'));
-						return false;
-					})
+					$.ajax({
+						type: \"POST\",
+						url: \"backend.php\",
+						cache: false,
+						data: \"menu=about\",
+						success: function(html) {
+							$(\"#menu\").html(html);
+							$(\"#menu a\").bind(\"click\", updateMenu);
+						}
+					});
+
 				});";
 	}
 
 	public function writeAll($template) {
 		$result = str_replace("#title#", $this->getTitle(), $template);
-		$result = str_replace("#menu#", $this->getMenu(), $result);
 		$result = str_replace("#script#", $this->getScripts(), $result);
 		echo $result;
 	}
