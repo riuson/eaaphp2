@@ -3,7 +3,7 @@
 function getMenuContent($menuName) {
 	// list of mode's files (mode_*.php)
 	$modes = array();
-	foreach (glob("classes/mode_*.php") as $filename) {
+	foreach (glob(Settings::ClassesPath() . "mode_*.php") as $filename) {
 		array_push($modes, $filename);
 	}
 

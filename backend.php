@@ -1,5 +1,6 @@
 <?php
 
+include_once "classes/settings.php";
 //print_r($_POST);
 // process mode request
 if (isset($_POST["mode"]) && !empty($_POST["mode"])) {
@@ -8,11 +9,11 @@ if (isset($_POST["mode"]) && !empty($_POST["mode"])) {
 	// check mode name, contains only letters, not more 20
 	if (preg_match("/^[a-z]+$/", $mode) > 0 && strlen($mode) <= 20) {
 
-		$modefile = "classes/mode_{$mode}.php";
+		$modefile = Settings::ClassesPath() . "mode_{$mode}.php";
 
 		// list of mode's files (mode_*.php)
 		$modes = array();
-		foreach (glob("classes/mode_*.php") as $filename) {
+		foreach (glob(Settings::ClassesPath() . "mode_*.php") as $filename) {
 			array_push($modes, $filename);
 		}
 
@@ -29,12 +30,12 @@ if (isset($_POST["mode"]) && !empty($_POST["mode"])) {
 } else
 // process status request
 if (isset($_POST["status"])) {
-	include_once "classes/status.php";
+	include_once Settings::ClassesPath() . "status.php";
 	echo getStatusContent();
 } else
 // process menu request
 if (isset($_POST["menu"]) && !empty($_POST["menu"])) {
-	include_once "classes/menu.php";
+	include_once Settings::ClassesPath() . "menu.php";
 	echo getMenuContent($_POST["menu"]);
 } else {
 	echo "bad request";
