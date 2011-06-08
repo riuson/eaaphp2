@@ -6,8 +6,14 @@ if (!function_exists('getContent')) {
 
 	function getContent() {
 		return "
-			<p>Test</p>
-			<p>Sample</p>";
+<p>Test</p>
+<p>Sample</p>
+<script>
+	function bindContent()
+	{
+	}
+</script>
+";
 	}
 
 }

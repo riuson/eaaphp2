@@ -50,6 +50,7 @@ class Page {
 						data: \"mode=\" + modeName,
 						success: function(html) {
 							$(\"#content\").html(html);
+							bindContent();
 						}
 					});
 					return false;

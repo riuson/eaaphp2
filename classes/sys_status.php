@@ -26,6 +26,7 @@ if (!function_exists('getContent')) {
 			data: \"sys=login\",
 			success: function(html) {
 				$(\"#content\").html(html);
+				bindContent();
 			}
 		});
 		return false;
