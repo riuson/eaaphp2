@@ -1,9 +1,12 @@
 <?php
 
-//ini_set('display_errors', 1);
-//error_reporting(E_ALL);
+ini_set('display_errors', 1);
+error_reporting(E_ALL);
 
 include_once "classes/settings.php";
+
+include_once Settings::ClassesPath() . "user.php";
+
 //print_r($_POST);
 // process mode request
 if (isset($_POST["mode"]) && !empty($_POST["mode"])) {

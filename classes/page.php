@@ -21,7 +21,6 @@ class Page {
 						data: \"sys=status\",
 						success: function(html) {
 							$(\"#status\").html(html);
-							$(\"#status a\").bind(\"click\", updateStatus);
 							bindStatus();
 						}
 					});
