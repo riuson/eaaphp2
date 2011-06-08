@@ -2,9 +2,9 @@
 
 $modeTitle = "Test mode";
 
-if (!function_exists('getModeContent')) {
+if (!function_exists('getContent')) {
 
-	function getModeContent() {
+	function getContent() {
 		return "
 			<p class='content_header'>Test</p>
 			<p>Sample</p>";

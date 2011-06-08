@@ -2,9 +2,9 @@
 
 $modeTitle = "About";
 
-if (!function_exists('getModeContent')) {
+if (!function_exists('getContent')) {
 
-	function getModeContent() {
+	function getContent() {
 		return "
 			<p class='content_header'>About</p>
 			<p>Used documentation:</p>
