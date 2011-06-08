@@ -54,6 +54,17 @@ if (!function_exists('getContent')) {
 							$(\"#content\").html(html);
 							bindContent();
 							updateStatus();
+
+							$.ajax({
+								type: \"POST\",
+								url: \"backend.php\",
+								cache: false,
+								data: \"sys=menu&item=about\",
+								success: function(html) {
+									$(\"#menu\").html(html);
+									$(\"#menu a\").bind(\"click\", updateMenu);
+								}
+							});
 						}
 					});
 					return false;
