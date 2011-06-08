@@ -6,11 +6,12 @@ if (!function_exists('getContent')) {
 
 	function getContent() {
 		$d = date("H:i:s");
-		$user = new User();
+		$user = User::CreateUser();
+		$username = $user->UserName();
 		if ($user->IsLogged())
 			$userInfo = "Welcome, $username";
 		else
-			$userInfo = "Login";
+			$userInfo = "$username, Login";
 		return "EVE server: Online, 28984 pilots<br/>Sun 5 Jun 2011 $d<br/><a href='login'>$userInfo</a>
 <script>
 	function bindStatus()

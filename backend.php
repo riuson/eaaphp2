@@ -7,7 +7,9 @@ include_once "classes/settings.php";
 
 include_once Settings::ClassesPath() . "user.php";
 
-//print_r($_POST);
+session_start();
+
+//print_r($_SESSION);
 // process mode request
 if (isset($_POST["mode"]) && !empty($_POST["mode"])) {
 	$mode = $_POST["mode"];
