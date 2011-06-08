@@ -6,7 +6,7 @@ if (!function_exists('getContent')) {
 
 	function getContent() {
 		return "
-			<p class='content_header'>Test</p>
+			<p>Test</p>
 			<p>Sample</p>";
 	}
 

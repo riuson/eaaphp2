@@ -1,3 +1,4 @@
-p.content_header{
+#content p:first-child{
+	color: silver;
 	font: bold 120% serif;
 }

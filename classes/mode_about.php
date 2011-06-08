@@ -6,7 +6,7 @@ if (!function_exists('getContent')) {
 
 	function getContent() {
 		return "
-			<p class='content_header'>About</p>
+			<p>About</p>
 			<p>Used documentation:</p>
 			<ul>
 				<li><a href='http://myeve.eve-online.com/api/doc/default.asp'>EVE API Documentation Index</a></li>

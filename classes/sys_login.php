@@ -8,7 +8,7 @@
 if (!function_exists('getContent')) {
 
 	function getContent() {
-		$result = "login form";
+		$result = "<p>User login</p>";
 		return $result;
 	}
 
