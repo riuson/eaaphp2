@@ -37,17 +37,40 @@ class User {
 	}
 
 	public function Login($username, $password) {
-		if ($username == "user" && $password == "pass") {
-			$this->logged = true;
-			$this->accountId = 100500;
-			$this->username = $username;
-			$_SESSION["User"] = $this;
-		} else {
-			$this->logged = false;
-			$this->accountId = -1;
-			$this->username = "Guest";
-			$_SESSION["User"] = $this;
+
+		include Settings::ClassesPath() . "database.php";
+
+		$result = false;
+		$this->logged = false;
+		$this->accountId = -1;
+		$this->username = "Guest";
+		$_SESSION["User"] = $this;
+
+		if (!empty($username) && !is_array($username) && !empty($password) && !is_array($password)) {
+			// connect db
+			$db = new Database();
+
+			if ($db->IsValid()) {
+
+				// query for user
+				$query = sprintf("select * from api_users where login = '%s' and password = md5('%s');",
+								$db->escape($username),
+								$db->escape($password));
+				$qr = $db->query($query);
+
+				// if user exists
+				if ($qr != null && $qr->num_rows == 1) {
+
+					$row = $qr->fetch_assoc();
+
+					$this->logged = true;
+					$this->accountId = $row["accountId"];
+					$this->username = $username;
+					$_SESSION["User"] = $this;
+				}
+			}
 		}
+		return $result;
 	}
 
 	public function SaveSession() {

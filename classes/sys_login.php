@@ -1,14 +1,13 @@
 <?php
 
-/**
+/*
  * Login form
- *
- * @author vladimir
  */
 if (!function_exists('getContent')) {
 
 	function getContent() {
-	 print_r($_POST);
+
+		print_r($_POST);
 		if (isset($_POST["username"]))
 			$username = $_POST["username"];
 		else
@@ -23,7 +22,9 @@ if (!function_exists('getContent')) {
 		$user->Login($username, $password);
 		$loginSuccess = $user->IsLogged();
 
-		$result = "<p>User login</p>
+		if (!$loginSuccess) {
+
+			$result = "<p>User login</p>
 <div class='login'>
 	<form id='form_login'>
 		<fieldset>
@@ -72,6 +73,12 @@ if (!function_exists('getContent')) {
 		}
 	</script>
 </div>";
+		} else {
+
+			$result = "<p>User login</p>
+<div class='login'>Login as '$username' success.
+</div>";
+		}
 		return $result;
 	}
 
