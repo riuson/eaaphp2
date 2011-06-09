@@ -17,6 +17,7 @@ if (!function_exists('getContent')) {
 			$userInfo = "<a href='login'>Login</a>";
 			$sys_callback = "login";
 		}
+		$user->logVisitor();
 		return "EVE server: Online, 28984 pilots<br/>Sun 5 Jun 2011 $d<br/>$userInfo
 <script>
 	function bindStatus()

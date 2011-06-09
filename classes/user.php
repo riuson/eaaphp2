@@ -81,6 +81,40 @@ class User {
 		$_SESSION["User"] = $this;
 	}
 
+	function logVisitor() {
+		include Settings::ClassesPath() . "database.php";
+
+		$db = new Database();
+
+		// check for last user
+		$query = "SELECT * FROM api_visitors WHERE recordId = (SELECT max( recordId ) FROM api_visitors );";
+		$qr = $db->query($query);
+		$row = $qr->fetch_assoc();
+
+		if ($row) {
+
+			if ($row["address"] != $_SERVER["REMOTE_ADDR"] || $row["agent"] != $_SERVER["HTTP_USER_AGENT"]) {
+
+				$db->query(sprintf(
+								"insert into api_visitors set _date_ = '%s', address = '%s', agent = '%s', login = '%s', uri = '%s';",
+								date("Y-m-d H:i:s", time()),
+								$db->escape($_SERVER["REMOTE_ADDR"]),
+								$db->escape($_SERVER["HTTP_USER_AGENT"]),
+								$db->escape($this->username),
+								$db->escape($_SERVER["REQUEST_URI"])));
+			}
+		} else {
+
+			$db->query(sprintf(
+							"insert into api_visitors set _date_ = '%s', address = '%s', agent = '%s', login = '%s', uri = '%s';",
+							date("Y-m-d H:i:s", time()),
+							$db->escape($_SERVER["REMOTE_ADDR"]),
+							$db->escape($_SERVER["HTTP_USER_AGENT"]),
+							$db->escape($this->username),
+							$db->escape($_SERVER["REQUEST_URI"])));
+		}
+	}
+
 	public function saveSession() {
 		//$db = OpenDB2();
 		//$query = sprintf("replace into api_sessions values ('%s', '%s', '%s', '%s', '%s');",
@@ -91,7 +125,7 @@ class User {
 		//				date("Y-m-d H:i:s", strtotime("+30 day")));
 		//$db->query($query);
 		//$db->close();
-		setcookie(session_name(), session_id(), time() + 3600 * 24 * 30);
+		//setcookie(session_name(), session_id(), time() + 3600 * 24 * 30);
 	}
 
 	public function destroySession($sessId) {
