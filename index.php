@@ -1,7 +1,7 @@
 <?php
 
 include_once 'classes/page.php';
-$template = "
+$template = "<!DOCTYPE html>
 <html>
 	<head>
 		<title>#title#</title>
