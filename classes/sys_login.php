@@ -23,6 +23,13 @@ if (!function_exists('getContent')) {
 		$user->login($username, $password);
 		$loginSuccess = $user->isLogged();
 
+		$loginFailedMsg = "";
+		if (!empty($username) && !empty($password)) {
+
+			if (!$loginSuccess)
+				$loginFailedMsg = "Login failed, try again";
+		}
+
 		if (!$loginSuccess) {
 
 			$result = "<p>User login</p>
@@ -30,17 +37,20 @@ if (!function_exists('getContent')) {
 	<form id='form_login'>
 		<fieldset>
 			<legend>Enter your login and password</legend>
-			<div class='fm-req'>
+			<div>
 				<label for='username'>Login:</label>
 				<input name='username' id='username' type='text' value='$username'/>
 			</div>
-			<div class='fm-opt'>
+			<div>
 				<label for='password'>Password:</label>
 				<input id='password' name='password' type='text' value='$password'/>
 			</div>
-			<div class='fm-opt'>
+			<div>
 				<label>&nbsp;</label>
 				<input type='submit' value='Send'>
+			</div>
+			<div class='login_error'>
+				$loginFailedMsg
 			</div>
 		</fieldset>
 	</form>

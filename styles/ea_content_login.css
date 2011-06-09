@@ -35,3 +35,9 @@
 div.login {
 	display: table;
 }
+
+div.login_error
+{
+	color: red;
+	text-align: center;
+}
