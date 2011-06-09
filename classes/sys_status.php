@@ -10,11 +10,11 @@ if (!function_exists('getContent')) {
 		$username = $user->UserName();
 		if ($user->IsLogged()) {
 
-			$userInfo = "Welcome, $username. <a href='logout'>Logout</a>";
+			$userInfo = "$username. <a href='logout'>Logout</a>";
 			$sys_callback = "logout";
 		} else {
 
-			$userInfo = "$username, <a href='login'>Login</a>";
+			$userInfo = "<a href='login'>Login</a>";
 			$sys_callback = "login";
 		}
 		return "EVE server: Online, 28984 pilots<br/>Sun 5 Jun 2011 $d<br/>$userInfo

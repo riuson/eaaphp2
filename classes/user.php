@@ -43,7 +43,7 @@ class User {
 		$result = false;
 		$this->logged = false;
 		$this->accountId = -1;
-		$this->username = "Guest";
+		$this->username = "";
 		$_SESSION["User"] = $this;
 
 		if (!empty($username) && !is_array($username) && !empty($password) && !is_array($password)) {
@@ -77,7 +77,7 @@ class User {
 		$result = false;
 		$this->logged = false;
 		$this->accountId = -1;
-		$this->username = "Guest";
+		$this->username = "";
 		$_SESSION["User"] = $this;
 	}
 
