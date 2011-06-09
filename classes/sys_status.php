@@ -8,11 +8,16 @@ if (!function_exists('getContent')) {
 		$d = date("H:i:s");
 		$user = User::CreateUser();
 		$username = $user->UserName();
-		if ($user->IsLogged())
-			$userInfo = "Welcome, $username";
-		else
-			$userInfo = "$username, Login";
-		return "EVE server: Online, 28984 pilots<br/>Sun 5 Jun 2011 $d<br/><a href='login'>$userInfo</a>
+		if ($user->IsLogged()) {
+
+			$userInfo = "Welcome, $username. <a href='logout'>Logout</a>";
+			$sys_callback = "logout";
+		} else {
+
+			$userInfo = "$username, <a href='login'>Login</a>";
+			$sys_callback = "login";
+		}
+		return "EVE server: Online, 28984 pilots<br/>Sun 5 Jun 2011 $d<br/>$userInfo
 <script>
 	function bindStatus()
 	{
@@ -24,7 +29,7 @@ if (!function_exists('getContent')) {
 			type: \"POST\",
 			url: \"backend.php\",
 			cache: false,
-			data: \"sys=login\",
+			data: \"sys=$sys_callback\",
 			success: function(html) {
 				$(\"#content\").html(html);
 				bindContent();

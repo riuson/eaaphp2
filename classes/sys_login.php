@@ -7,7 +7,8 @@ if (!function_exists('getContent')) {
 
 	function getContent() {
 
-		print_r($_POST);
+		//print_r($_POST);
+
 		if (isset($_POST["username"]))
 			$username = $_POST["username"];
 		else
@@ -18,9 +19,9 @@ if (!function_exists('getContent')) {
 		else
 			$password = "";
 
-		$user = User::CreateUser();
-		$user->Login($username, $password);
-		$loginSuccess = $user->IsLogged();
+		$user = User::createUser();
+		$user->login($username, $password);
+		$loginSuccess = $user->isLogged();
 
 		if (!$loginSuccess) {
 
@@ -77,7 +78,12 @@ if (!function_exists('getContent')) {
 
 			$result = "<p>User login</p>
 <div class='login'>Login as '$username' success.
-</div>";
+</div>
+	<script>
+		function bindContent()
+		{
+		}
+	</script>";
 		}
 		return $result;
 	}

@@ -16,7 +16,7 @@ class User {
 		$this->accountId = -1;
 	}
 
-	public static function CreateUser() {
+	public static function createUser() {
 
 		if (isset($_SESSION["User"])) {
 
@@ -28,15 +28,15 @@ class User {
 		}
 	}
 
-	public function IsLogged() {
+	public function isLogged() {
 		return $this->logged;
 	}
 
-	public function UserName() {
+	public function userName() {
 		return $this->username;
 	}
 
-	public function Login($username, $password) {
+	public function login($username, $password) {
 
 		include Settings::ClassesPath() . "database.php";
 
@@ -73,7 +73,15 @@ class User {
 		return $result;
 	}
 
-	public function SaveSession() {
+	public function logout() {
+		$result = false;
+		$this->logged = false;
+		$this->accountId = -1;
+		$this->username = "Guest";
+		$_SESSION["User"] = $this;
+	}
+
+	public function saveSession() {
 		//$db = OpenDB2();
 		//$query = sprintf("replace into api_sessions values ('%s', '%s', '%s', '%s', '%s');",
 		//				GetUniqueId(),
@@ -86,7 +94,7 @@ class User {
 		setcookie(session_name(), session_id(), time() + 3600 * 24 * 30);
 	}
 
-	public function DestroySession($sessId) {
+	public function destroySession($sessId) {
 		//$db = OpenDB2();
 		//$query = sprintf("delete from api_sessions where sessionId = '%s' and address = '%s';",
 		//				$db->real_escape_string($sessId),

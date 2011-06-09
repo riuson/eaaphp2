@@ -43,7 +43,7 @@ class Database {
 		//echo "destruct";
 	}
 
-	public function IsValid() {
+	public function isValid() {
 
 		if ($this->db == null)
 			return false;
@@ -72,7 +72,7 @@ class Database {
 	}
 
 //http://web-tribe.net/one_news/518.html
-	function RC4($keyString, $data) {
+	function rc4($keyString, $data) {
 		include Settings::ConfigFileNameDb();
 //ecncrypt $data with the key in $keyfile with an rc4 algorithm
 //$pwd = implode('', file($keyfile));
@@ -106,7 +106,7 @@ class Database {
 		return $Zcrypt;
 	}
 
-	function LogVisitor() {
+	function logVisitor() {
 		$recordId = "1";
 		date_default_timezone_set("Etc/Universal");
 		$t = time(); // - $t;
