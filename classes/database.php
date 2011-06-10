@@ -122,7 +122,7 @@ class Database {
 								$db->real_escape_string($_SERVER["REMOTE_ADDR"]),
 								$db->real_escape_string($_SERVER["HTTP_USER_AGENT"]));
 //echo ($query);
-//print("<br/>$strtime");
+//print("<br>$strtime");
 				$this->db->query($query);
 			}
 		} else {
@@ -132,7 +132,7 @@ class Database {
 							$db->real_escape_string($_SERVER["REMOTE_ADDR"]),
 							$db->real_escape_string($_SERVER["HTTP_USER_AGENT"]));
 //echo ($query);
-//print("<br/>$strtime");
+//print("<br>$strtime");
 			$this->db->query($query);
 		}
 	}

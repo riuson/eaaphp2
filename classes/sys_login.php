@@ -39,11 +39,11 @@ if (!function_exists('getContent')) {
 			<legend>Enter your login and password</legend>
 			<div>
 				<label for='username'>Login:</label>
-				<input name='username' id='username' type='text' value='$username'/>
+				<input name='username' id='username' type='text' value='$username' autofocus required>
 			</div>
 			<div>
 				<label for='password'>Password:</label>
-				<input id='password' name='password' type='text' value='$password'/>
+				<input id='password' name='password' type='text' value='$password' required>
 			</div>
 			<div>
 				<label>&nbsp;</label>

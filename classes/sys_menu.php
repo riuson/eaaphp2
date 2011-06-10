@@ -16,7 +16,7 @@ if (!function_exists('getContent')) {
 
 				// build menu from mode_*.php files
 				// href is mode name, text is mode title
-				$result = "<p>Menu</p>
+				$result = "<nav><p>Menu</p>
 		<ul>";
 				foreach ($modes as $filename) {
 					include_once "$filename";
@@ -28,7 +28,7 @@ if (!function_exists('getContent')) {
 
 					$result .= "<li><a href='$mode'>$title</a></li>";
 				}
-				$result .= "</ul>";
+				$result .= "</ul></nav>";
 			}
 		}
 		return $result;
