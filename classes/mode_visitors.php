@@ -6,8 +6,6 @@ if (!function_exists('getContent')) {
 
 	function getContent() {
 
-		include Settings::ClassesPath() . "database.php";
-
 		$result = "<p>Visitors list</p>";
 		$db = new Database();
 

@@ -38,8 +38,6 @@ class User {
 
 	public function login($username, $password) {
 
-		include Settings::ClassesPath() . "database.php";
-
 		$result = false;
 		$this->logged = false;
 		$this->accountId = -1;
@@ -82,7 +80,6 @@ class User {
 	}
 
 	function logVisitor() {
-		include Settings::ClassesPath() . "database.php";
 
 		$db = new Database();
 

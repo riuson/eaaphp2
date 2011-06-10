@@ -3,9 +3,19 @@
 ini_set('display_errors', 1);
 error_reporting(E_ALL);
 
-include_once "classes/settings.php";
+function __autoload($class_name) {
 
-include_once Settings::ClassesPath() . "user.php";
+	$filename = strtolower($class_name) . '.php';
+
+	$file = 'classes' . DIRECTORY_SEPARATOR . $filename;
+
+	if (file_exists($file) == false) {
+
+		return false;
+	}
+
+	include ($file);
+}
 
 session_start();
 
