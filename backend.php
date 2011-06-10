@@ -40,7 +40,7 @@ $router = new Router($registry);
 $router->setPath(site_path . "classes/controllers");
 $registry['router'] = $router;
 
-$user = User::createUser();
+$user = User::createUser($registry);
 $registry['user'] = $user;
 
 $modes = new Modes();

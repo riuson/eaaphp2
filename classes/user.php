@@ -10,21 +10,24 @@ class User {
 	private $accountId;
 	private $logged;
 	private $username;
+	private $registry;
 
-	public function __construct() {
+	public function __construct($registry) {
 		$this->logged = false;
 		$this->accountId = -1;
+		$this->registry = $registry;
 	}
 
-	public static function createUser() {
+	public static function createUser($registry) {
 
 		if (isset($_SESSION["User"])) {
 
 			$userSaved = $_SESSION["User"];
+			$userSaved->registry = $registry;
 			return $userSaved;
 		} else {
 
-			return new User();
+			return new User($registry);
 		}
 	}
 
@@ -46,15 +49,14 @@ class User {
 
 		if (!empty($username) && !is_array($username) && !empty($password) && !is_array($password)) {
 			// connect db
-			$db = new Database();
 
-			if ($db->IsValid()) {
+			if ($this->registry['db']->isValid()) {
 
 				// query for user
 				$query = sprintf("select * from api_users where login = '%s' and password = md5('%s');",
-								$db->escape($username),
-								$db->escape($password));
-				$qr = $db->query($query);
+								$this->registry['db']->escape($username),
+								$this->registry['db']->escape($password));
+				$qr = $this->registry['db']->query($query);
 
 				// if user exists
 				if ($qr != null && $qr->num_rows == 1) {
@@ -81,11 +83,9 @@ class User {
 
 	function logVisitor() {
 
-		$db = new Database();
-
 		// check for last user
 		$query = "SELECT * FROM api_visitors WHERE recordId = (SELECT max( recordId ) FROM api_visitors );";
-		$qr = $db->query($query);
+		$qr = $this->registry['db']->query($query);
 		if ($qr) {
 
 			$row = $qr->fetch_assoc();
@@ -93,23 +93,23 @@ class User {
 
 				if ($row["address"] != $_SERVER["REMOTE_ADDR"] || $row["agent"] != $_SERVER["HTTP_USER_AGENT"]) {
 
-					$db->query(sprintf(
+					$this->registry['db']->query(sprintf(
 									"insert into api_visitors set _date_ = '%s', address = '%s', agent = '%s', login = '%s', uri = '%s';",
 									date("Y-m-d H:i:s", time()),
-									$db->escape($_SERVER["REMOTE_ADDR"]),
-									$db->escape($_SERVER["HTTP_USER_AGENT"]),
-									$db->escape($this->username),
-									$db->escape($_SERVER["REQUEST_URI"])));
+									$this->registry['db']->escape($_SERVER["REMOTE_ADDR"]),
+									$this->registry['db']->escape($_SERVER["HTTP_USER_AGENT"]),
+									$this->registry['db']->escape($this->username),
+									$this->registry['db']->escape($_SERVER["REQUEST_URI"])));
 				}
 			} else {
 
-				$db->query(sprintf(
+				$this->registry['db']->query(sprintf(
 								"insert into api_visitors set _date_ = '%s', address = '%s', agent = '%s', login = '%s', uri = '%s';",
 								date("Y-m-d H:i:s", time()),
-								$db->escape($_SERVER["REMOTE_ADDR"]),
-								$db->escape($_SERVER["HTTP_USER_AGENT"]),
-								$db->escape($this->username),
-								$db->escape($_SERVER["REQUEST_URI"])));
+								$this->registry['db']->escape($_SERVER["REMOTE_ADDR"]),
+								$this->registry['db']->escape($_SERVER["HTTP_USER_AGENT"]),
+								$this->registry['db']->escape($this->username),
+								$this->registry['db']->escape($_SERVER["REQUEST_URI"])));
 			}
 		}
 	}
