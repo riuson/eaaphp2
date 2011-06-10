@@ -8,6 +8,7 @@
 class Modes {
 
 	private $modes;
+	private $freeModes;
 
 	public function __construct() {
 
@@ -19,6 +20,7 @@ class Modes {
 
 		// collect titles and mode names
 		$this->modes = array();
+		$this->freeModes = array();
 		foreach ($files as $filename) {
 			// load mode controller file
 			include_once "$filename";
@@ -30,11 +32,19 @@ class Modes {
 			// get mode title by static method of controller
 			$title = call_user_func(array($className, 'title'));
 			$this->modes[$title] = $mode;
+			// get mode access rights by static method of controller
+			$limited = call_user_func(array($className, 'limited'));
+			if (!$limited)
+				$this->freeModes[$title] = $mode;
 		}
 	}
 
 	public function getModes() {
 		return $this->modes;
+	}
+
+	public function getFreeModes() {
+		return $this->freeModes;
 	}
 
 }

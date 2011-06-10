@@ -11,6 +11,10 @@ if (!class_exists("controller_mode_visitors")) {
 			return "Visitors list";
 		}
 
+		static function limited() {
+			return true;
+		}
+
 		function process() {
 
 			// check user access rights here

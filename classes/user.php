@@ -114,6 +114,31 @@ class User {
 		}
 	}
 
+	public function filterAvailableModes($sourceModes) {
+
+		$result = array();
+		if ($this->isLogged()) {
+			$qr = $this->registry['db']->query(sprintf("select access from api_users where accountId = '%s'",
+									$this->registry['db']->escape($this->accountId)));
+			$row = $qr->fetch_assoc();
+			if ($row) {
+
+				// get access lsit from DB and split by comma
+				$accessString = $row["access"];
+				$accessList = explode(",", $accessString);
+
+				// check for each assigned access
+				foreach ($sourceModes as $key => $value) {
+					//$result = array_intersect($accessList, $sourceModes);
+					if (in_array($value, $accessList)) {
+						$result[$key] = $value;
+					}
+				}
+			}
+		}
+		return $result;
+	}
+
 	public function saveSession() {
 		//$db = OpenDB2();
 		//$query = sprintf("replace into api_sessions values ('%s', '%s', '%s', '%s', '%s');",

@@ -11,6 +11,10 @@ if (!class_exists("controller_mode_about")) {
 			return "About";
 		}
 
+		static function limited() {
+			return false;
+		}
+
 		function process() {
 
 			$this->registry['template']->show('mode_about');
