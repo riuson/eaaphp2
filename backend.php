@@ -19,6 +19,9 @@ function __autoload($class_name) {
 
 session_start();
 
+// variable's storage
+$registry = new Registry();
+
 //print_r($_SESSION);
 // process mode request
 if (isset($_POST["mode"]) && !empty($_POST["mode"])) {
