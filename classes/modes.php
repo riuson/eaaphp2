@@ -28,7 +28,7 @@ class Modes {
 			// get controller class name
 			$className = "controller_" . $mode;
 			// get mode title by static method of controller
-			$title = $className::title();
+			$title = call_user_func(array($className, 'title'));
 			$this->modes[$title] = $mode;
 		}
 	}
