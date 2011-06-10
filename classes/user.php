@@ -89,11 +89,22 @@ class User {
 		// check for last user
 		$query = "SELECT * FROM api_visitors WHERE recordId = (SELECT max( recordId ) FROM api_visitors );";
 		$qr = $db->query($query);
-		$row = $qr->fetch_assoc();
+		if ($qr) {
 
-		if ($row) {
+			$row = $qr->fetch_assoc();
+			if ($row) {
 
-			if ($row["address"] != $_SERVER["REMOTE_ADDR"] || $row["agent"] != $_SERVER["HTTP_USER_AGENT"]) {
+				if ($row["address"] != $_SERVER["REMOTE_ADDR"] || $row["agent"] != $_SERVER["HTTP_USER_AGENT"]) {
+
+					$db->query(sprintf(
+									"insert into api_visitors set _date_ = '%s', address = '%s', agent = '%s', login = '%s', uri = '%s';",
+									date("Y-m-d H:i:s", time()),
+									$db->escape($_SERVER["REMOTE_ADDR"]),
+									$db->escape($_SERVER["HTTP_USER_AGENT"]),
+									$db->escape($this->username),
+									$db->escape($_SERVER["REQUEST_URI"])));
+				}
+			} else {
 
 				$db->query(sprintf(
 								"insert into api_visitors set _date_ = '%s', address = '%s', agent = '%s', login = '%s', uri = '%s';",
@@ -103,15 +114,6 @@ class User {
 								$db->escape($this->username),
 								$db->escape($_SERVER["REQUEST_URI"])));
 			}
-		} else {
-
-			$db->query(sprintf(
-							"insert into api_visitors set _date_ = '%s', address = '%s', agent = '%s', login = '%s', uri = '%s';",
-							date("Y-m-d H:i:s", time()),
-							$db->escape($_SERVER["REMOTE_ADDR"]),
-							$db->escape($_SERVER["HTTP_USER_AGENT"]),
-							$db->escape($this->username),
-							$db->escape($_SERVER["REQUEST_URI"])));
 		}
 	}
 
