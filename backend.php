@@ -3,11 +3,18 @@
 ini_set('display_errors', 1);
 error_reporting(E_ALL);
 
+define('DIRSEP', DIRECTORY_SEPARATOR);
+
+$site_path = realpath(dirname(__FILE__) . DIRSEP) . DIRSEP;
+define('site_path', $site_path);
+
+//define ('site_path', "/home/vladimir/Документы/eaaphp2/");
+//echo site_path;
 function __autoload($class_name) {
 
 	$filename = strtolower($class_name) . '.php';
 
-	$file = 'classes' . DIRECTORY_SEPARATOR . $filename;
+	$file = site_path . 'classes' . DIRSEP . $filename;
 
 	if (file_exists($file) == false) {
 
@@ -22,8 +29,28 @@ session_start();
 // variable's storage
 $registry = new Registry();
 
+$db = new Database();
+$registry['db'] = $db;
+
+$template = new Template($registry);
+$registry['template'] = $template;
+
+$router = new Router($registry);
+//echo site_path . "controllers";
+$router->setPath(site_path . "classes/controllers");
+$registry['router'] = $router;
+
+$user = User::createUser();
+$registry['user'] = $user;
+
+$modes = new Modes();
+$registry['modes'] = $modes;
+
+$router->delegate();
+
 //print_r($_SESSION);
 // process mode request
+/*
 if (isset($_POST["mode"]) && !empty($_POST["mode"])) {
 	$mode = $_POST["mode"];
 
@@ -49,6 +76,7 @@ if (isset($_POST["mode"]) && !empty($_POST["mode"])) {
 		echo "$mode incorrect mode";
 	}
 } else
+
 // process status request
 if (isset($_POST["sys"]) && !empty($_POST["sys"])) {
 	$func = $_POST["sys"];
@@ -77,4 +105,5 @@ if (isset($_POST["sys"]) && !empty($_POST["sys"])) {
 } else {
 	echo "bad request";
 }
+ */
 ?>
