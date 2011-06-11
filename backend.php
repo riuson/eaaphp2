@@ -21,13 +21,15 @@ function __autoload($class_name) {
 	} else if (preg_match("/^(?:model_)((mode|sys)_.+)$/i", $class_name, $matches) > 0) {
 
 		$file = site_path . "classes" . DIRSEP . "models" . DIRSEP . $matches[1] . ".php";
+	} else if (preg_match("/^(api_.*)/i", $class_name, $matches) > 0) {
+
+		$file = site_path . "classes" . DIRSEP . "api" . DIRSEP . $matches[1] . ".php";
 	} else {
 
 		$file = site_path . "classes" . DIRSEP . $class_name . ".php";
 	}
 
 	if (file_exists($file) == false) {
-		echo "failed $file" ;
 		return false;
 	}
 
@@ -35,6 +37,8 @@ function __autoload($class_name) {
 }
 
 session_start();
+
+date_default_timezone_set("Etc/Universal");
 
 // variable's storage
 $registry = new Registry();
@@ -55,4 +59,11 @@ $modes = new Modes($user);
 $registry['modes'] = $modes;
 
 echo $router->delegate();
+
+// api testing
+
+//$api = new Api_Base($registry);
+$params = array();
+$params["version"] = "2";
+//$api->request("/server/ServerStatus.xml.aspx", $params);
 ?>

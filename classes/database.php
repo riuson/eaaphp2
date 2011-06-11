@@ -8,6 +8,7 @@ class Database {
 
 	private $db_link;
 	private $errorMsg;
+	private $affectedRows;
 
 	public function __construct() {
 
@@ -59,6 +60,7 @@ class Database {
 			return null;
 
 		$result = $this->db_link->query($sqlQuery);
+		$this->affectedRows = $this->db_link->affected_rows;
 		//echo $sqlQuery;
 
 		if (!$result) {
@@ -133,6 +135,10 @@ class Database {
 							$db->real_escape_string($_SERVER["HTTP_USER_AGENT"]));
 			$this->db_link->query($query);
 		}
+	}
+
+	public function getAffectedRows() {
+	 return $this->affectedRows;
 	}
 
 }
