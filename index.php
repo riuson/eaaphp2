@@ -11,7 +11,7 @@ $template = "<!DOCTYPE html>
 		<link media=\"screen\" rel=\"stylesheet\" href=\"styles/ea.css\">
 		<link rel=\"shortcut icon\" href=\"favicon.ico\">
 		<script type=\"text/javascript\" src=\"scripts/jquery-1.6.1.min.js\"></script>
-		<script type=\"text/javascript\" src=\"scripts/jquery.pagination.js\"></script>
+		<script type=\"text/javascript\" src=\"scripts/jquery.dataTables.js\"></script>
 	</head>
 	<body>
 		<div id=\"main\">

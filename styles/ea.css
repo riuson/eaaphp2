@@ -5,7 +5,11 @@
 @import "ea_menu.css";
 @import "ea_content.css";
 @import "ea_common.css";
-@import "ea_pagination.css";
+
+@import "datatables/demo_page.css";
+@import "datatables/demo_table_jui.css";
+@import "datatables/jquery-ui-1.8.4.custom.css";
+@import "datatables/TableTools_JUI.css";
 
 body {
 	background-color:#1A1A1A;

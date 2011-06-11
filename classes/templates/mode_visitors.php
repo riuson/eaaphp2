@@ -12,68 +12,75 @@ if (!class_exists("template_mode_visitors")) {
 
 			extract($this->vars);
 
-			if ($showTable) {
-				//$result = "
-//<table id=\"visitors_table\">
-$result = "	<tr>
-		<td>#</td>
-		<td>Date</td>
-		<td>Address</td>
-		<td>User-Agent</td>";
+			if ($showTemplate) {
 
-				$result .= "
-	</tr>";
-
-				$rowIndex = $start;
-				$rowClass = "even";
-				foreach ($log as $sub) {
-					if (($rowIndex % 2) == 1)
-						$rowClass = "even";
-					else
-						$rowClass = "odd";
-					$rowIndex++;
-
-					$result .= "
-<tr class='$rowClass'>
-	<td>$rowIndex</td>
-	<td>$sub[_date_]</td>
-	<td>$sub[address]</td>
-	<td>$sub[agent]</td>
-</tr>";
-				}
-				//$result .= "</table>";
-			}
-			else {
 				$result = "<p>Visitors list</p>
-<div id=\"pagination\"></div>
-<table id=\"visitors_table\"></table>";
+<table id=\"example\">
+	<thead>
+		<tr>
+			<th>Date</th>
+			<th>Address</th>
+			<th>User Agent</th>
+			<th>Login</th>
+			<th>Uri</th>
+		</tr>
+	</thead>
+	<tbody>
 
-			}
+	</tbody>
+	<tfoot>
+		<tr>
+			<th>Rendering engine</th>
 
-			$result .= "
+			<th>Browser</th>
+			<th>Platform(s)</th>
+			<th>Engine version</th>
+			<th>CSS grade</th>
+		</tr>
+	</tfoot>
+</table>
 <script>
 	function bindContent()
 	{
-		$(\"#pagination\").pagination($total, {
-			items_per_page:20,
-			num_edge_entries: 2,
-			load_first_page: true,
-			callback:handlePaginationClick
-		});
-	}
-    function handlePaginationClick(new_page_index, pagination_container) {
-        $.ajax({
-			type: \"POST\",
-			url: \"backend.php\",
-			cache: false,
-			data: \"call=mode_visitors&page=\" + new_page_index,
-			success: function(html) {
-				$(\"#visitors_table\").html(html);
+		$('#example').dataTable( {
+		\"bJQueryUI\": true,
+		\"bProcessing\": true,
+		\"bServerSide\": true,
+		\"bSort\": true,
+		\"bAutoWidth\" : false,
+		\"sDom\": '<\"H\"Tfr>t<\"F\"ip>',
+		\"oTableTools\": {
+			\"aButtons\": [
+				\"copy\", \"csv\", \"xls\", \"pdf\",
+				{
+					\"sExtends\":    \"collection\",
+					\"sButtonText\": \"Save\",
+					\"aButtons\":    [ \"csv\", \"xls\", \"pdf\" ]
+				}
+			]
+		},
+
+		\"sPaginationType\": \"full_numbers\",
+		\"sAjaxSource\": \"backend.php\",
+		\"fnServerData\": function ( sSource, aoData, fnCallback ) {
+			aoData.push( { \"name\": \"call\", \"value\": \"mode_visitors\" } );
+			aoData.push( { \"name\": \"sender\", \"value\": \"datatables\" } );
+			$.ajax( {
+				\"dataType\": 'json',
+				\"type\": \"POST\",
+				\"url\": sSource,
+				\"data\": aoData,
+				\"success\": fnCallback
+			} );
 			}
 		});
-        return false;
-    }
-</script>";
+	}
+</script>
+";
+			} else {
+
+				$result = $jsonOutput;
+			}
 
 			return $result;
 		}

@@ -17,22 +17,18 @@ if (!class_exists("controller_mode_visitors")) {
 
 		function process() {
 
-			$page = 0;
-			if (isset($_POST['page']) && is_numeric($_POST['page'])) {
-				$page = $_POST['page'];
-				$showTable = true;
-			} else {
-				$showTable = false;
+			$showTemplate = true;
+			if (isset($_POST['sender']) && $_POST['sender'] == "datatables") {
+				$showTemplate = false;
 			}
 
-			$model = new model_mode_visitors($this->registry);
-			$model->prepare($page);
-			$this->registry['template']->set('log', $model->getLog());
-			$this->registry['template']->set('page', $model->getPage());
-			$this->registry['template']->set('start', $model->getStart());
-			$this->registry['template']->set('total', $model->getTotal());
+			if (!$showTemplate) {
+				$model = new model_mode_visitors($this->registry);
+				$model->prepare();
+				$this->registry['template']->set('jsonOutput', $model->getJsonOutput());
+			}
 
-			$this->registry['template']->set('showTable', $showTable);
+			$this->registry['template']->set('showTemplate', $showTemplate);
 			return $this->registry['template']->show('mode_visitors');
 		}
 
