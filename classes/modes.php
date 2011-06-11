@@ -7,10 +7,11 @@
 
 class Modes {
 
-	private $modes;
+	private $allModes;
 	private $freeModes;
+	private $availableModes;
 
-	public function __construct() {
+	public function __construct($user) {
 
 		// collect mode controllers
 		$files = array();
@@ -19,8 +20,9 @@ class Modes {
 		}
 
 		// collect titles and mode names
-		$this->modes = array();
+		$this->allModes = array();
 		$this->freeModes = array();
+		$this->availableModes = array();
 		foreach ($files as $filename) {
 			// load mode controller file
 			include_once "$filename";
@@ -37,6 +39,13 @@ class Modes {
 			if (!$limited)
 				$this->freeModes[$title] = $mode;
 		}
+
+		// exclude modes not available for this user
+		$modesAvailableToUser = array();
+		if ($user->isLogged()) {
+			$modesAvailableToUser = $user->filterAvailableModes($this->modes);
+		}
+		$this->availableModes = array_merge($this->freeModes, $modesAvailableToUser);
 	}
 
 	public function getModes() {
@@ -45,6 +54,10 @@ class Modes {
 
 	public function getFreeModes() {
 		return $this->freeModes;
+	}
+
+	public function getAvailableModes() {
+		return $this->availableModes;
 	}
 
 }

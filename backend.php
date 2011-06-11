@@ -47,7 +47,7 @@ $registry['router'] = $router;
 $user = User::createUser($registry);
 $registry['user'] = $user;
 
-$modes = new Modes();
+$modes = new Modes($user);
 $registry['modes'] = $modes;
 
 echo $router->delegate();
