@@ -5,6 +5,7 @@
 @import "ea_menu.css";
 @import "ea_content.css";
 @import "ea_common.css";
+@import "ea_pagination.css";
 
 body {
 	background-color:#1A1A1A;

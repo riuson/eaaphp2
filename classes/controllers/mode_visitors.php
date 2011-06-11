@@ -17,10 +17,22 @@ if (!class_exists("controller_mode_visitors")) {
 
 		function process() {
 
-			$model = new model_mode_visitors($this->registry);
-			$model->prepare();
+			$page = 0;
+			if (isset($_POST['page']) && is_numeric($_POST['page'])) {
+				$page = $_POST['page'];
+				$showTable = true;
+			} else {
+				$showTable = false;
+			}
 
+			$model = new model_mode_visitors($this->registry);
+			$model->prepare($page);
 			$this->registry['template']->set('log', $model->getLog());
+			$this->registry['template']->set('page', $model->getPage());
+			$this->registry['template']->set('start', $model->getStart());
+			$this->registry['template']->set('total', $model->getTotal());
+
+			$this->registry['template']->set('showTable', $showTable);
 			return $this->registry['template']->show('mode_visitors');
 		}
 
