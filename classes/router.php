@@ -31,6 +31,11 @@ Class Router {
 			$call = 'mode_about';
 		}
 
+		// check for invalid symbols
+		if (preg_match("/[^a-zA-Z_\d]/", $call) > 0)
+		{
+			$call = "sys_error";
+		}
 
 		$controller = "controller_" . $call;
 	}
