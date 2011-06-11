@@ -10,12 +10,15 @@ define('site_path', $site_path);
 
 function __autoload($class_name) {
 
-	$filename = strtolower($class_name) . '.php';
+	$class_name = strtolower($class_name);
 
-	$file = site_path . 'classes' . DIRSEP . $filename;
+	if (preg_match("/^(?:controller_)((mode|sys)_.+)$/i", $class_name, $matches) > 0) {
+		$file = site_path . "classes" . DIRSEP . "controllers" . DIRSEP . $matches[1] . ".php";
+	} else {
+		$file = site_path . "classes" . DIRSEP . $class_name . ".php";
+	}
 
 	if (file_exists($file) == false) {
-
 		return false;
 	}
 
@@ -34,8 +37,6 @@ $template = new Template($registry);
 $registry['template'] = $template;
 
 $router = new Router($registry);
-//echo site_path . "controllers";
-$router->setPath(site_path . "classes/controllers");
 $registry['router'] = $router;
 
 $user = User::createUser($registry);
