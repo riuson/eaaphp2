@@ -32,9 +32,15 @@ Class Router {
 		}
 
 		// check for invalid symbols
-		if (preg_match("/[^a-zA-Z_\d]/", $call) > 0)
-		{
+		if (preg_match("/[^a-zA-Z_\d]/", $call) > 0) {
 			$call = "sys_error";
+		}
+
+		// check user access rights to mode
+		if (preg_match("/mode_/", $call) > 0) {
+			$modes = $this->registry['modes'];
+			if (!in_array($call, $modes->getAvailableModes()))
+				$call = "sys_error";
 		}
 
 		$controller = "controller_" . $call;
