@@ -18,12 +18,16 @@ function __autoload($class_name) {
 	} else if (preg_match("/^(?:template_)((mode|sys)_.+)$/i", $class_name, $matches) > 0) {
 
 		$file = site_path . "classes" . DIRSEP . "templates" . DIRSEP . $matches[1] . ".php";
+	} else if (preg_match("/^(?:model_)((mode|sys)_.+)$/i", $class_name, $matches) > 0) {
+
+		$file = site_path . "classes" . DIRSEP . "models" . DIRSEP . $matches[1] . ".php";
 	} else {
 
 		$file = site_path . "classes" . DIRSEP . $class_name . ".php";
 	}
 
 	if (file_exists($file) == false) {
+		echo "failed $file" ;
 		return false;
 	}
 

@@ -17,26 +17,10 @@ if (!class_exists("controller_mode_visitors")) {
 
 		function process() {
 
-			$qr = $this->registry['db']->query("select count(*) as _count_ from api_visitors;");
-			$row = $qr->fetch_assoc();
-			$recordsCount = $row["_count_"];
-			$qr->close();
+			$model = new model_mode_visitors($this->registry);
+			$model->prepare();
 
-			$result = array();
-
-			$qr = $this->registry['db']->query("SELECT * FROM `api_visitors` group by address, date(_date_) order by _date_ desc limit 20;");
-
-			while ($row = $qr->fetch_assoc()) {
-				$sub = array();
-				$sub["_date_"] = $row["_date_"];
-				$sub["address"] = $row["address"];
-				$sub["agent"] = $row["agent"];
-
-				array_push($result, $sub);
-			}
-			$qr->close();
-
-			$this->registry['template']->set('log', $result);
+			$this->registry['template']->set('log', $model->getLog());
 			return $this->registry['template']->show('mode_visitors');
 		}
 

@@ -10,11 +10,16 @@ if (!class_exists("template_sys_menu")) {
 
 		public function getView() {
 
-			extract($this->vars);
+			$items = $this->vars['items'];
+
 			$result = "<nav><p>Menu</p>
 		<ul>";
-			foreach ($modes as $key => $value) {
-				$result .= "<li><a href='$value'>$key</a></li>";
+			foreach ($items as $item) {
+
+				if ($item['current'])
+					$result .= "<li>$item[title]</li>";
+				else
+					$result .= "<li><a href='$item[call]'>$item[title]</a></li>";
 			}
 			$result .= "</ul></nav>";
 

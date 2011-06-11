@@ -9,7 +9,7 @@ if (!class_exists("template_sys_status")) {
 
 		public function getView() {
 
-			extract($this->vars);
+			extract($this->vars['status']);
 			if ($user_logged) {
 				$user_info = "$user_name. <a href='$callback'>Logout</a>";
 			} else {
