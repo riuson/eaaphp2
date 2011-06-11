@@ -55,7 +55,7 @@ if (!class_exists("template_sys_login")) {
 								type: \"POST\",
 								url: \"backend.php\",
 								cache: false,
-								data: \"call=sys_menu&item=about\",
+								data: \"call=sys_menu\",
 								success: function(html) {
 									$(\"#menu\").html(html);
 									$(\"#menu a\").bind(\"click\", updateMenu);
@@ -64,6 +64,16 @@ if (!class_exists("template_sys_login")) {
 						}
 					});
 					return false;
+				});
+				$.ajax({
+					type: \"POST\",
+					url: \"backend.php\",
+					cache: false,
+					data: \"call=sys_menu\",
+					success: function(html) {
+						$(\"#menu\").html(html);
+						$(\"#menu a\").bind(\"click\", updateMenu);
+					}
 				});
 		}
 	</script>

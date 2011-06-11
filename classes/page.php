@@ -65,7 +65,7 @@ class Page {
 						type: \"POST\",
 						url: \"backend.php\",
 						cache: false,
-						data: \"call=sys_menu&item=about\",
+						data: \"call=sys_menu&item=mode_about\",
 						success: function(html) {
 							$(\"#menu\").html(html);
 							$(\"#menu a\").bind(\"click\", updateMenu);
