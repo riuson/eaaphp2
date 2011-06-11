@@ -18,7 +18,7 @@ class Page {
 						type: \"POST\",
 						url: \"backend.php\",
 						cache: false,
-						data: \"sys=status\",
+						data: \"call=sys_status\",
 						success: function(html) {
 							$(\"#status\").html(html);
 							bindStatus();
@@ -32,7 +32,7 @@ class Page {
 						type: \"POST\",
 						url: \"backend.php\",
 						cache: false,
-						data: \"sys=menu&item=\" + $(this).attr('href'),
+						data: \"call=sys_menu&item=\" + $(this).attr('href'),
 						success: function(html) {
 							$(\"#menu\").html(html);
 							$(\"#menu a\").bind(\"click\", updateMenu);
@@ -47,7 +47,7 @@ class Page {
 						type: \"POST\",
 						url: \"backend.php\",
 						cache: false,
-						data: \"mode=\" + modeName,
+						data: \"call=\" + modeName,
 						success: function(html) {
 							$(\"#content\").html(html);
 							bindContent();
@@ -59,13 +59,13 @@ class Page {
 				$(document).ready(function() {
 				
 					updateStatus();
-					loadContent('about');
+					loadContent('mode_about');
 
 					$.ajax({
 						type: \"POST\",
 						url: \"backend.php\",
 						cache: false,
-						data: \"sys=menu&item=about\",
+						data: \"call=sys_menu&item=mode_about\",
 						success: function(html) {
 							$(\"#menu\").html(html);
 							$(\"#menu a\").bind(\"click\", updateMenu);

@@ -4,11 +4,9 @@
  * Class with database object
  */
 
-//$db_link = mysql_connect($host, $user, $password);
-//mysql_close($dblink);
 class Database {
 
-	private $db;
+	private $db_link;
 	private $errorMsg;
 
 	public function __construct() {
@@ -17,35 +15,34 @@ class Database {
 
 		$count = 0;
 		while ($count++ < 3) {
-			$this->db = @new mysqli($db_host, $db_user, $db_password, $db_name);
+			$this->db_link = @new mysqli($db_host, $db_user, $db_password, $db_name);
 			if (mysqli_connect_errno ()) {
 				if ($retries == 1) {
 					$this->errorMsg = 'Cannot connect db {$db_host} #' . mysqli_connect_errno() . ' ' . mysqli_connect_error();
+					die($this->errorMsg);
 				}
-				$this->db = null;
+				$this->db_link = null;
 			} else {
-				$this->db->query("SET NAMES utf8");
-				$this->db->query("SET CHARACTER SET utf8");
-				$this->db->query("SET CHARACTER_SET_RESULTS=utf8");
+				$this->db_link->query("SET NAMES utf8");
+				$this->db_link->query("SET CHARACTER SET utf8");
+				$this->db_link->query("SET CHARACTER_SET_RESULTS=utf8");
 				break;
 			}
 		}
-		//echo "construct";
 	}
 
 	function __destruct() {
 
-		if ($this->db != null) {
+		if ($this->db_link != null) {
 
-			$this->db->close();
-			$this->db = null;
+			$this->db_link->close();
+			$this->db_link = null;
 		}
-		//echo "destruct";
 	}
 
 	public function isValid() {
 
-		if ($this->db == null)
+		if ($this->db_link == null)
 			return false;
 		else
 			return true;
@@ -53,7 +50,7 @@ class Database {
 
 	public function escape($value) {
 
-		return $this->db->real_escape_string($value);
+		return $this->db_link->real_escape_string($value);
 	}
 
 	function query($sqlQuery) {
@@ -61,12 +58,12 @@ class Database {
 		if (!trim($sqlQuery))
 			return null;
 
-		$result = $this->db->query($sqlQuery);
+		$result = $this->db_link->query($sqlQuery);
 		//echo $sqlQuery;
 
 		if (!$result) {
 
-			$this->errorMsg = $this->db->error;
+			$this->errorMsg = $this->db_link->error;
 		}
 		return $result;
 	}
@@ -113,7 +110,7 @@ class Database {
 		$strtime = date("Y-m-d H:i:s", $t);
 //check for last user
 		$query = "select * from api_visitors where _date_ in (select max(_date_) from api_visitors);";
-		$qr = $this->db->query($query);
+		$qr = $this->db_link->query($query);
 		if ($row = $qr->fetch_assoc()) {
 			if ($row["ip"] != $_SERVER["REMOTE_ADDR"] || $row["userAgent"] != $_SERVER["HTTP_USER_AGENT"]) {
 				$query = sprintf("insert into api_visitors values ('%s', '%s', '%s', '%s');",
@@ -121,9 +118,7 @@ class Database {
 								$db->real_escape_string($strtime),
 								$db->real_escape_string($_SERVER["REMOTE_ADDR"]),
 								$db->real_escape_string($_SERVER["HTTP_USER_AGENT"]));
-//echo ($query);
-//print("<br>$strtime");
-				$this->db->query($query);
+				$this->db_link->query($query);
 			}
 		} else {
 			$query = sprintf("insert into api_visitors values ('%s', '%s', '%s', '%s');",
@@ -131,9 +126,7 @@ class Database {
 							$db->real_escape_string($strtime),
 							$db->real_escape_string($_SERVER["REMOTE_ADDR"]),
 							$db->real_escape_string($_SERVER["HTTP_USER_AGENT"]));
-//echo ($query);
-//print("<br>$strtime");
-			$this->db->query($query);
+			$this->db_link->query($query);
 		}
 	}
 
