@@ -42,6 +42,7 @@ if (!class_exists("template_mode_visitors")) {
 	function bindContent()
 	{
 		$('#example').dataTable( {
+		\"aaSorting\": [[ 0, \"desc\" ]],
 		\"bJQueryUI\": true,
 		\"bProcessing\": true,
 		\"bServerSide\": true,
