@@ -3,14 +3,31 @@
 ini_set('display_errors', 1);
 error_reporting(E_ALL);
 
+define('DIRSEP', DIRECTORY_SEPARATOR);
+
+$site_path = realpath(dirname(__FILE__) . DIRSEP) . DIRSEP;
+define('site_path', $site_path);
+
 function __autoload($class_name) {
 
-	$filename = strtolower($class_name) . '.php';
+	$class_name = strtolower($class_name);
 
-	$file = 'classes' . DIRECTORY_SEPARATOR . $filename;
+	if (preg_match("/^(?:controller_)((mode|sys)_.+)$/i", $class_name, $matches) > 0) {
+
+		$file = site_path . "classes" . DIRSEP . "controllers" . DIRSEP . $matches[1] . ".php";
+	} else if (preg_match("/^(?:template_)((mode|sys)_.+)$/i", $class_name, $matches) > 0) {
+
+		$file = site_path . "classes" . DIRSEP . "templates" . DIRSEP . $matches[1] . ".php";
+	} else if (preg_match("/^(?:model_)((mode|sys)_.+)$/i", $class_name, $matches) > 0) {
+
+		$file = site_path . "classes" . DIRSEP . "models" . DIRSEP . $matches[1] . ".php";
+	} else {
+
+		$file = site_path . "classes" . DIRSEP . $class_name . ".php";
+	}
 
 	if (file_exists($file) == false) {
-
+		echo "failed $file" ;
 		return false;
 	}
 
@@ -19,59 +36,23 @@ function __autoload($class_name) {
 
 session_start();
 
-//print_r($_SESSION);
-// process mode request
-if (isset($_POST["mode"]) && !empty($_POST["mode"])) {
-	$mode = $_POST["mode"];
+// variable's storage
+$registry = new Registry();
 
-	// check mode name, contains only letters, not more 20
-	if (preg_match("/^[a-z]+$/", $mode) > 0 && strlen($mode) <= 20) {
+$db = new Database();
+$registry['db'] = $db;
 
-		$modefile = Settings::ClassesPath() . "mode_{$mode}.php";
+$template = new Template($registry);
+$registry['template'] = $template;
 
-		// list of mode's files (mode_*.php)
-		$modes = array();
-		foreach (glob(Settings::ClassesPath() . "mode_*.php") as $filename) {
-			array_push($modes, $filename);
-		}
+$router = new Router($registry);
+$registry['router'] = $router;
 
-		// if mode exists, call it
-		if (in_array($modefile, $modes)) {
-			include_once "$modefile";
-			echo getContent();
-		} else {
-			echo "$mode not found";
-		}
-	} else {
-		echo "$mode incorrect mode";
-	}
-} else
-// process status request
-if (isset($_POST["sys"]) && !empty($_POST["sys"])) {
-	$func = $_POST["sys"];
+$user = User::createUser($registry);
+$registry['user'] = $user;
 
-	// check mode name, contains only letters, not more 20
-	if (preg_match("/^[a-z]+$/", $func) > 0 && strlen($func) <= 20) {
+$modes = new Modes($user);
+$registry['modes'] = $modes;
 
-		$funcfile = Settings::ClassesPath() . "sys_{$func}.php";
-
-		// list of mode's files (mode_*.php)
-		$funcs = array();
-		foreach (glob(Settings::ClassesPath() . "sys_*.php") as $filename) {
-			array_push($funcs, $filename);
-		}
-
-		// if mode exists, call it
-		if (in_array($funcfile, $funcs)) {
-			include_once "$funcfile";
-			echo getContent();
-		} else {
-			echo "$func not found";
-		}
-	} else {
-		echo "$func incorrect function";
-	}
-} else {
-	echo "bad request";
-}
+echo $router->delegate();
 ?>

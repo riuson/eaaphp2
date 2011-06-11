@@ -1,36 +1,20 @@
 <?php
 
 /*
- * Login form
+ * Login template view.
  */
-if (!function_exists('getContent')) {
 
-	function getContent() {
+if (!class_exists("template_sys_login")) {
 
-		//print_r($_POST);
+	Class template_sys_login Extends Template_Base {
 
-		if (isset($_POST["username"]))
-			$username = $_POST["username"];
-		else
-			$username = "";
+		public function getView() {
 
-		if (isset($_POST["password"]))
-			$password = $_POST["password"];
-		else
-			$password = "";
-
-		$user = User::createUser();
-		$user->login($username, $password);
-		$loginSuccess = $user->isLogged();
-
-		$loginFailedMsg = "";
-		if (!empty($username) && !empty($password)) {
-
-			if (!$loginSuccess)
-				$loginFailedMsg = "Login failed, try again";
-		}
-
-		if (!$loginSuccess) {
+			extract($this->vars);
+			if ($loginFailed)
+				$msg = "Login failed, try again";
+			else
+				$msg = "";
 
 			$result = "<p>User login</p>
 <div class='login'>
@@ -43,14 +27,14 @@ if (!function_exists('getContent')) {
 			</div>
 			<div>
 				<label for='password'>Password:</label>
-				<input id='password' name='password' type='text' value='$password' required>
+				<input id='password' name='password' type='text' required>
 			</div>
 			<div>
 				<label>&nbsp;</label>
 				<input type='submit' value='Send'>
 			</div>
 			<div class='login_error'>
-				$loginFailedMsg
+				$msg
 			</div>
 		</fieldset>
 	</form>
@@ -61,7 +45,7 @@ if (!function_exists('getContent')) {
 					$.ajax({
 						type: \"POST\",
 						url: \"backend.php\",
-						data: \"sys=login&username=\" + $(\"#username\").val() + \"&password=\" + $(\"#password\").val(),
+						data: \"call=sys_login&username=\" + $(\"#username\").val() + \"&password=\" + $(\"#password\").val(),
 						success: function(html){
 							$(\"#content\").html(html);
 							bindContent();
@@ -71,7 +55,7 @@ if (!function_exists('getContent')) {
 								type: \"POST\",
 								url: \"backend.php\",
 								cache: false,
-								data: \"sys=menu&item=about\",
+								data: \"call=sys_menu\",
 								success: function(html) {
 									$(\"#menu\").html(html);
 									$(\"#menu a\").bind(\"click\", updateMenu);
@@ -81,21 +65,22 @@ if (!function_exists('getContent')) {
 					});
 					return false;
 				});
+				$.ajax({
+					type: \"POST\",
+					url: \"backend.php\",
+					cache: false,
+					data: \"call=sys_menu\",
+					success: function(html) {
+						$(\"#menu\").html(html);
+						$(\"#menu a\").bind(\"click\", updateMenu);
+					}
+				});
 		}
 	</script>
 </div>";
-		} else {
+			return $result;
+		}
 
-			$result = "<p>User login</p>
-<div class='login'>Login as '$username' success.
-</div>
-	<script>
-		function bindContent()
-		{
-		}
-	</script>";
-		}
-		return $result;
 	}
 
 }
