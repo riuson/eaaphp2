@@ -53,7 +53,7 @@ class Database {
 		return $this->db_link->real_escape_string($value);
 	}
 
-	function query($sqlQuery) {
+	public function query($sqlQuery) {
 
 		if (!trim($sqlQuery))
 			return null;
@@ -66,6 +66,11 @@ class Database {
 			$this->errorMsg = $this->db_link->error;
 		}
 		return $result;
+	}
+
+	public function getErrorMessage() {
+
+		return $this->errorMsg;
 	}
 
 //http://web-tribe.net/one_news/518.html

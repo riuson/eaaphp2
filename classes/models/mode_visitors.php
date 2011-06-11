@@ -19,35 +19,13 @@ if (!class_exists("model_mode_visitors")) {
 			/* DB table to use */
 			$sTable = "api_visitors";
 
-			/* Database connection information */
-			$gaSql['user'] = "eauser";
-			$gaSql['password'] = "RSN6s5nLHQhG5DSA";
-			$gaSql['db'] = "eaaphp2db";
-			$gaSql['server'] = "localhost";
-
-
-			/*			 * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
-			 * If you just want to use the basic configuration for DataTables with PHP server-side, there is
-			 * no need to edit below this line
-			 */
-
-			/*
-			 * MySQL connection
-			 */
-			$gaSql['link'] = mysql_pconnect($gaSql['server'], $gaSql['user'], $gaSql['password']) or
-					die('Could not open connection to server');
-
-			mysql_select_db($gaSql['db'], $gaSql['link']) or
-					die('Could not select database ' . $gaSql['db']);
-
-
 			/*
 			 * Paging
 			 */
 			$sLimit = "";
 			if (isset($_POST['iDisplayStart']) && $_POST['iDisplayLength'] != '-1') {
-				$sLimit = "LIMIT " . mysql_real_escape_string($_POST['iDisplayStart']) . ", " .
-						mysql_real_escape_string($_POST['iDisplayLength']);
+				$sLimit = "LIMIT " . $this->registry['db']->escape($_POST['iDisplayStart']) . ", " .
+						$this->registry['db']->escape($_POST['iDisplayLength']);
 			}
 
 
@@ -59,7 +37,7 @@ if (!class_exists("model_mode_visitors")) {
 				for ($i = 0; $i < intval($_POST['iSortingCols']); $i++) {
 					if ($_POST['bSortable_' . intval($_POST['iSortCol_' . $i])] == "true") {
 						$sOrder .= $aColumns[intval($_POST['iSortCol_' . $i])] . "
-				 	" . mysql_real_escape_string($_POST['sSortDir_' . $i]) . ", ";
+				 	" . $this->registry['db']->escape($_POST['sSortDir_' . $i]) . ", ";
 					}
 				}
 
@@ -80,7 +58,7 @@ if (!class_exists("model_mode_visitors")) {
 			if ($_POST['sSearch'] != "") {
 				$sWhere = "WHERE (";
 				for ($i = 0; $i < count($aColumns); $i++) {
-					$sWhere .= $aColumns[$i] . " LIKE '%" . mysql_real_escape_string($_POST['sSearch']) . "%' OR ";
+					$sWhere .= $aColumns[$i] . " LIKE '%" . $this->registry['db']->escape($_POST['sSearch']) . "%' OR ";
 				}
 				$sWhere = substr_replace($sWhere, "", -3);
 				$sWhere .= ')';
@@ -94,7 +72,7 @@ if (!class_exists("model_mode_visitors")) {
 					} else {
 						$sWhere .= " AND ";
 					}
-					$sWhere .= $aColumns[$i] . " LIKE '%" . mysql_real_escape_string($_POST['sSearch_' . $i]) . "%' ";
+					$sWhere .= $aColumns[$i] . " LIKE '%" . $this->registry['db']->escape($_POST['sSearch_' . $i]) . "%' ";
 				}
 			}
 
@@ -110,14 +88,14 @@ if (!class_exists("model_mode_visitors")) {
 		$sOrder
 		$sLimit
 	";
-			$rResult = mysql_query($sQuery, $gaSql['link']) or die(mysql_error());
+			$rResult = $this->registry['db']->query($sQuery) or die($this->registry['db']->getErrorMessage());
 
 			/* Data set length after filtering */
 			$sQuery = "
 		SELECT FOUND_ROWS()
 	";
-			$rResultFilterTotal = mysql_query($sQuery, $gaSql['link']) or die(mysql_error());
-			$aResultFilterTotal = mysql_fetch_array($rResultFilterTotal);
+			$rResultFilterTotal = $this->registry['db']->query($sQuery) or die($this->registry['db']->getErrorMessage());
+			$aResultFilterTotal = $rResultFilterTotal->fetch_array();
 			$iFilteredTotal = $aResultFilterTotal[0];
 
 			/* Total data set length */
@@ -125,8 +103,8 @@ if (!class_exists("model_mode_visitors")) {
 		SELECT COUNT(" . $sIndexColumn . ")
 		FROM   $sTable
 	";
-			$rResultTotal = mysql_query($sQuery, $gaSql['link']) or die(mysql_error());
-			$aResultTotal = mysql_fetch_array($rResultTotal);
+			$rResultTotal = $this->registry['db']->query($sQuery) or die($this->registry['db']->getErrorMessage());
+			$aResultTotal = $rResultTotal->fetch_array();
 			$iTotal = $aResultTotal[0];
 
 
@@ -140,7 +118,7 @@ if (!class_exists("model_mode_visitors")) {
 				"aaData" => array()
 			);
 
-			while ($aRow = mysql_fetch_array($rResult)) {
+			while ($aRow = $rResult->fetch_array()) {
 				$row = array();
 				for ($i = 0; $i < count($aColumns); $i++) {
 					if ($aColumns[$i] == "version") {
