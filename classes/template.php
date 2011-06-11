@@ -43,10 +43,8 @@ Class Template {
 			trigger_error('Template `' . $name . '` does not exist.', E_USER_NOTICE);
 			return false;
 		}
-		// Load variables
-		foreach ($this->vars as $key => $value) {
-			$$key = $value;
-		}
+		// Import variables into the current symbol table from an array
+		extract($this->vars);
 		include ($path);
 	}
 

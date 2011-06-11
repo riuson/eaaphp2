@@ -9,8 +9,8 @@ Class controller_sys_menu Extends Controller_Base {
 	function process() {
 		$user = $this->registry['user'];
 		$modes = $this->registry['modes'];
+
 		// exclude modes not available for this user
-		// here
 		$modesAvailableToUser = array();
 		if ($user->isLogged()) {
 			$modesAvailableToUser = $user->filterAvailableModes($modes->getModes());

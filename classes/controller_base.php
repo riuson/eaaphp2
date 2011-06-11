@@ -10,7 +10,6 @@ Abstract Class Controller_Base {
 
 	function __construct($registry) {
 		$this->registry = $registry;
-		//echo "hello";
 	}
 
 	abstract function process();

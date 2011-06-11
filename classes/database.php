@@ -4,8 +4,6 @@
  * Class with database object
  */
 
-//$db_link = mysql_connect($host, $user, $password);
-//mysql_close($dblink);
 class Database {
 
 	private $db_link;
@@ -21,7 +19,7 @@ class Database {
 			if (mysqli_connect_errno ()) {
 				if ($retries == 1) {
 					$this->errorMsg = 'Cannot connect db {$db_host} #' . mysqli_connect_errno() . ' ' . mysqli_connect_error();
-					die ($this->errorMsg);
+					die($this->errorMsg);
 				}
 				$this->db_link = null;
 			} else {
@@ -31,7 +29,6 @@ class Database {
 				break;
 			}
 		}
-		//echo "construct";
 	}
 
 	function __destruct() {
@@ -121,8 +118,6 @@ class Database {
 								$db->real_escape_string($strtime),
 								$db->real_escape_string($_SERVER["REMOTE_ADDR"]),
 								$db->real_escape_string($_SERVER["HTTP_USER_AGENT"]));
-//echo ($query);
-//print("<br>$strtime");
 				$this->db_link->query($query);
 			}
 		} else {
@@ -131,8 +126,6 @@ class Database {
 							$db->real_escape_string($strtime),
 							$db->real_escape_string($_SERVER["REMOTE_ADDR"]),
 							$db->real_escape_string($_SERVER["HTTP_USER_AGENT"]));
-//echo ($query);
-//print("<br>$strtime");
 			$this->db_link->query($query);
 		}
 	}
