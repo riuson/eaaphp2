@@ -30,12 +30,11 @@ if (!class_exists("template_mode_visitors")) {
 	</tbody>
 	<tfoot>
 		<tr>
-			<th>Rendering engine</th>
-
-			<th>Browser</th>
-			<th>Platform(s)</th>
-			<th>Engine version</th>
-			<th>CSS grade</th>
+			<th>Date</th>
+			<th>Address</th>
+			<th>User Agent</th>
+			<th>Login</th>
+			<th>Uri</th>
 		</tr>
 	</tfoot>
 </table>
