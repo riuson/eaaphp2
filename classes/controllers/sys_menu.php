@@ -27,7 +27,7 @@ Class controller_sys_menu Extends Controller_Base {
 
 		$this->registry['template']->set('item', $item);
 		$this->registry['template']->set('modes', $displayModes);
-		$this->registry['template']->show('sys_menu');
+		return $this->registry['template']->show('sys_menu');
 	}
 
 }

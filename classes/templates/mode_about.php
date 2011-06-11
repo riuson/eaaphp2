@@ -1,11 +1,17 @@
 <?php
 
 /*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
+ * About template view.
  */
 
-echo "
+if (!class_exists("template_mode_about")) {
+
+	Class template_mode_about Extends Template_Base {
+
+		public function getView() {
+
+			extract($this->vars);
+			$result = "
 <p>About</p>
 <p>Used documentation:</p>
 <ul>
@@ -21,4 +27,10 @@ Project repository at <a href='https://github.com/riuson/eaaphp2'>github</a>
 	}
 </script>
 ";
+			return $result;
+		}
+
+	}
+
+}
 ?>

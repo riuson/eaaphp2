@@ -13,8 +13,13 @@ function __autoload($class_name) {
 	$class_name = strtolower($class_name);
 
 	if (preg_match("/^(?:controller_)((mode|sys)_.+)$/i", $class_name, $matches) > 0) {
+
 		$file = site_path . "classes" . DIRSEP . "controllers" . DIRSEP . $matches[1] . ".php";
+	} else if (preg_match("/^(?:template_)((mode|sys)_.+)$/i", $class_name, $matches) > 0) {
+
+		$file = site_path . "classes" . DIRSEP . "templates" . DIRSEP . $matches[1] . ".php";
 	} else {
+
 		$file = site_path . "classes" . DIRSEP . $class_name . ".php";
 	}
 
@@ -45,5 +50,5 @@ $registry['user'] = $user;
 $modes = new Modes();
 $registry['modes'] = $modes;
 
-$router->delegate();
+echo $router->delegate();
 ?>

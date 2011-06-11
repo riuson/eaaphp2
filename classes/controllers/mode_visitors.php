@@ -42,7 +42,7 @@ if (!class_exists("controller_mode_visitors")) {
 				$qr->close();
 
 				$this->registry['template']->set('log', $result);
-				$this->registry['template']->show('mode_visitors');
+				return $this->registry['template']->show('mode_visitors');
 			}
 		}
 

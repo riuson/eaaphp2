@@ -19,7 +19,7 @@ Class Router {
 		// Create controller (__autoload)
 		$controller = new $controllerClassName($this->registry);
 		// get data
-		$controller->process();
+		return $controller->process();
 	}
 
 	private function getController(&$controller) {

@@ -41,11 +41,13 @@ if (!class_exists("controller_sys_login")) {
 
 			if ($loginSuccess) {
 				$this->registry['template']->set('loginFailed', false);
-				$this->registry['template']->show('sys_login_success');
+				$result = $this->registry['template']->show('sys_login_success');
 			} else {
 				$this->registry['template']->set('loginFailed', $loginFailed);
-				$this->registry['template']->show('sys_login');
+				$result = $this->registry['template']->show('sys_login');
 			}
+
+			return $result;
 		}
 
 	}

@@ -1,15 +1,27 @@
 <?php
 
 /*
- * Menu template.
+ * Menu template view.
  */
 
-$result = "<nav><p>Menu</p>
-		<ul>";
-foreach ($modes as $key => $value) {
-	$result .= "<li><a href='$value'>$key</a></li>";
-}
-$result .= "</ul></nav>";
+if (!class_exists("template_sys_menu")) {
 
-echo $result;
+	Class template_sys_menu Extends Template_Base {
+
+		public function getView() {
+
+			extract($this->vars);
+			$result = "<nav><p>Menu</p>
+		<ul>";
+			foreach ($modes as $key => $value) {
+				$result .= "<li><a href='$value'>$key</a></li>";
+			}
+			$result .= "</ul></nav>";
+
+			return $result;
+		}
+
+	}
+
+}
 ?>

@@ -19,7 +19,8 @@ if (!class_exists("controller_sys_error")) {
 			else
 				$call = " ";
 			$this->registry['template']->set('call', $call);
-			$this->registry['template']->show('sys_error');
+
+			return $this->registry['template']->show('sys_error');
 		}
 
 	}

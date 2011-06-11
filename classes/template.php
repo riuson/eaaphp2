@@ -37,15 +37,9 @@ Class Template {
 
 	function show($name) {
 
-		$path = site_path . 'classes/templates' . DIRSEP . $name . '.php';
-
-		if (file_exists($path) == false) {
-			trigger_error('Template `' . $name . '` does not exist.', E_USER_NOTICE);
-			return false;
-		}
-		// Import variables into the current symbol table from an array
-		extract($this->vars);
-		include ($path);
+		$templateClassName = "template_" . $name;
+		$template = new $templateClassName($this->vars);
+		return $template->getView();
 	}
 
 }

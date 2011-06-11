@@ -17,7 +17,7 @@ if (!class_exists("controller_mode_about")) {
 
 		function process() {
 
-			$this->registry['template']->show('mode_about');
+			return $this->registry['template']->show('mode_about');
 		}
 
 	}

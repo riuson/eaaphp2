@@ -1,12 +1,22 @@
 <?php
 
-if ($user_logged) {
-	$user_info = "$user_name. <a href='$callback'>Logout</a>";
-} else {
-	$user_info = "<a href='$callback'>Login</a>";
-}
+/*
+ * Status template view
+ */
+if (!class_exists("template_sys_status")) {
 
-echo "
+	Class template_sys_status Extends Template_Base {
+
+		public function getView() {
+
+			extract($this->vars);
+			if ($user_logged) {
+				$user_info = "$user_name. <a href='$callback'>Logout</a>";
+			} else {
+				$user_info = "<a href='$callback'>Login</a>";
+			}
+
+			$result = "
 EVE Server: $server_online, $server_pilots pilot(s)<br>
 $server_time<br>
 $user_info
@@ -30,4 +40,10 @@ $user_info
 		return false;
 	}
 </script>";
+			return $result;
+		}
+
+	}
+
+}
 ?>

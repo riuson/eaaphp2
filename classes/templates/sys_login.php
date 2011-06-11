@@ -1,14 +1,22 @@
 <?php
 
 /*
- * Login template.
+ * Login template view.
  */
-if ($loginFailed)
-	$msg = "Login failed, try again";
-else
-	$msg = "";
 
-$result = "<p>User login</p>
+if (!class_exists("template_sys_login")) {
+
+	Class template_sys_login Extends Template_Base {
+
+		public function getView() {
+
+			extract($this->vars);
+			if ($loginFailed)
+				$msg = "Login failed, try again";
+			else
+				$msg = "";
+
+			$result = "<p>User login</p>
 <div class='login'>
 	<form id='form_login'>
 		<fieldset>
@@ -60,5 +68,10 @@ $result = "<p>User login</p>
 		}
 	</script>
 </div>";
-echo $result;
+			return $result;
+		}
+
+	}
+
+}
 ?>

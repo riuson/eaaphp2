@@ -18,7 +18,8 @@ if (!class_exists("controller_sys_logout")) {
 			$logoutSuccess = !$this->registry['user']->isLogged();
 
 			$this->registry['template']->set('logoutSuccess', $logoutSuccess);
-			$this->registry['template']->show('sys_logout');
+			
+			return $this->registry['template']->show('sys_logout');
 		}
 
 	}

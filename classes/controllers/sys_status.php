@@ -23,7 +23,8 @@ Class controller_sys_status Extends Controller_Base {
 		$this->registry['template']->set('user_logged', $user->IsLogged());
 		$this->registry['template']->set('user_name', $user->UserName());
 		$this->registry['template']->set('callback', $sys_callback);
-		$this->registry['template']->show('sys_status');
+
+		return $this->registry['template']->show('sys_status');
 	}
 
 }

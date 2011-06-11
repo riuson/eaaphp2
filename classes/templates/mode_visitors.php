@@ -1,10 +1,17 @@
 <?php
 
 /*
- * Visitors log list.
+ * Visitors log list tempalte.
  */
 
-$result = "<p>Visitors list</p>
+if (!class_exists("template_mode_visitors")) {
+
+	Class template_mode_visitors Extends Template_Base {
+
+		public function getView() {
+
+			extract($this->vars);
+			$result = "<p>Visitors list</p>
 <table>
 	<tr>
 		<td>#</td>
@@ -12,28 +19,28 @@ $result = "<p>Visitors list</p>
 		<td>Address</td>
 		<td>User-Agent</td>";
 
-$result .= "
+			$result .= "
 	</tr>";
 
-$rowIndex = 0;
-$rowClass = "even";
-foreach ($log as $sub) {
-	if (($rowIndex % 2) == 1)
-		$rowClass = "even";
-	else
-		$rowClass = "odd";
-	$rowIndex++;
+			$rowIndex = 0;
+			$rowClass = "even";
+			foreach ($log as $sub) {
+				if (($rowIndex % 2) == 1)
+					$rowClass = "even";
+				else
+					$rowClass = "odd";
+				$rowIndex++;
 
-	$result .= "
+				$result .= "
 <tr class='$rowClass'>
 	<td>$rowIndex</td>
 	<td>$sub[_date_]</td>
 	<td>$sub[address]</td>
 	<td>$sub[agent]</td>
 </tr>";
-}
+			}
 
-$result .= "
+			$result .= "
 </table>
 <script>
 	function bindContent()
@@ -41,5 +48,10 @@ $result .= "
 	}
 </script>";
 
-echo $result;
+			return $result;
+		}
+
+	}
+
+}
 ?>

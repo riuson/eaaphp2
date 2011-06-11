@@ -1,10 +1,17 @@
 <?php
 
 /*
- * Success login message.
+ * Success login message template view.
  */
 
-$result = "<p>User login</p>
+if (!class_exists("template_sys_login_success")) {
+
+	Class template_sys_login_success Extends Template_Base {
+
+		public function getView() {
+
+			extract($this->vars);
+			$result = "<p>User login</p>
 <div class='login'>
 	Login as '$username' success.
 </div>
@@ -13,5 +20,10 @@ $result = "<p>User login</p>
 	{
 	}
 </script>";
-echo $result;
+			return $result;
+		}
+
+	}
+
+}
 ?>
