@@ -11,8 +11,9 @@ if (!class_exists("template_sys_register")) {
 		public function getView() {
 
 			extract($this->vars['data']);
-			print_r($this->vars['data']);
-			if ($registerFailed)
+			//print_r($this->vars['data']);
+
+			if (!$firstAttempt)
 				$msg = "Registration failed, try again";
 			else
 				$msg = "";
