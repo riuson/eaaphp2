@@ -94,10 +94,10 @@ class User {
 									$this->registry['db']->escape($characterId),
 									$this->registry['db']->escape($characterName)
 					);
-					echo $query;
+					//echo $query;
 					$this->registry['db']->query($query);
-					//$this->registry['db']->affectedRows();
-					$result = true;
+					if ($this->registry['db']->getAffectedRows() == 1)
+						$result = true;
 				}
 			} else if ($apikeyOwner == "slave") {
 
@@ -113,9 +113,10 @@ class User {
 									$this->registry['db']->escape($masterName),
 									$this->registry['db']->escape($characterName)
 					);
-					echo $query;
+					//echo $query;
 					$this->registry['db']->query($query);
-					$result = true;
+					if ($this->registry['db']->getAffectedRows() == 1)
+						$result = true;
 				}
 			}
 		}
