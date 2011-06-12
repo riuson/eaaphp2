@@ -66,4 +66,10 @@ echo $router->delegate();
 $params = array();
 $params["version"] = "2";
 //$api->request("/server/ServerStatus.xml.aspx", $params);
+
+//$api = new Api_Server_Status($registry, $user);
+//$api->getStatus($serverOpen, $onlinePlayers);
+//echo $serverOpen . " " . $onlinePlayers;
+
+//echo $api->getErrorMessage();
 ?>

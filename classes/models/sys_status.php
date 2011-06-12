@@ -22,8 +22,11 @@ if (!class_exists("model_sys_status")) {
 				$sys_callback = "login";
 			}
 
-			$this->status['server_online'] = true;
-			$this->status['server_pilots'] = 28982;
+			$api = new Api_Server_Status($this->registry, $user);
+			$api->getStatus($serverOpen, $onlinePlayers);
+
+			$this->status['server_online'] = $serverOpen;
+			$this->status['server_pilots'] = $onlinePlayers;
 			$this->status['server_time'] = date("H:i:s");
 			$this->status['user_logged'] = $user->IsLogged();
 			$this->status['user_name'] = $user->UserName();
