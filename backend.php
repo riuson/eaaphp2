@@ -62,8 +62,8 @@ echo $router->delegate();
 
 // api testing
 
-//$api = new Api_Eve_CharacterID($registry, $user);
-//$api->getIds(array("Lehar", "CCP Garthagk"), $ids);
+//$api = new Api_Eve_CharacterName($registry, $user);
+//$api->getNames(array(797400947, 1188435724), $ids);
 //var_dump($ids);
 
 //echo $api->getErrorMessage();
