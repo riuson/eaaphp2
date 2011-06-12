@@ -5,6 +5,11 @@
  * Returns current Tranquility status and number of players online.
  * http://wiki.eve-id.net/APIv2_Server_ServerStatus_XML
  * http://api.eve-online.com/server/ServerStatus.xml.aspx
+ *
+ * $api = new Api_Server_Status($registry, $user);
+ * $api->getStatus($serverOpen, $onlinePlayers);
+ * echo $serverOpen . " " . $onlinePlayers;
+ *
  */
 
 class Api_Server_Status Extends Api_Base {

@@ -62,14 +62,9 @@ echo $router->delegate();
 
 // api testing
 
-//$api = new Api_Base($registry);
-$params = array();
-$params["version"] = "2";
-//$api->request("/server/ServerStatus.xml.aspx", $params);
-
-//$api = new Api_Server_Status($registry, $user);
-//$api->getStatus($serverOpen, $onlinePlayers);
-//echo $serverOpen . " " . $onlinePlayers;
+//$api = new Api_Eve_CharacterID($registry, $user);
+//$api->getIds(array("Lehar", "CCP Garthagk"), $ids);
+//var_dump($ids);
 
 //echo $api->getErrorMessage();
 ?>

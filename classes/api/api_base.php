@@ -2,6 +2,12 @@
 
 /*
  * Api base class.
+ *
+ * $api = new Api_Base($registry);
+ * $params = array();
+ * $params["version"] = "2";
+ * $api->request("/server/ServerStatus.xml.aspx", $params);
+ * 
  */
 
 class Api_Base {
@@ -44,6 +50,7 @@ class Api_Base {
 		try {
 
 			$uri = $this->getUri($target, $params);
+			$this->writeDebugMsg($uri . "<br>");
 			$fromCache = false;
 
 			// check cache
@@ -119,10 +126,11 @@ class Api_Base {
 
 		curl_setopt($ch, CURLOPT_URL, $this->apiroot . $uri);
 		curl_setopt($ch, CURLOPT_POST, count($params));
-		curl_setopt($ch, CURLOPT_POSTFIELDS, $uri);
+		curl_setopt($ch, CURLOPT_POSTFIELDS, $params);
 		curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
 		// read response to string
 		$serverResponse = curl_exec($ch);
+		$this->writeDebugMsg("post fields " . $uri . "<br>");
 
 		curl_close($ch);
 
