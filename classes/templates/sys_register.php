@@ -50,19 +50,19 @@ if (!class_exists("template_sys_register")) {
 			</div>
 			<div class='master'>
 				<label for='userId'>userId:</label>
-				<input id='userId' name='userId' type='number'>
+				<input id='userId' name='userId' type='number' value='$userId' required>
 			</div>
 			<div class='master'>
 				<label for='apiKey'>ApiKey:</label>
-				<input id='apiKey' name='apiKey' type='text'>
+				<input id='apiKey' name='apiKey' type='text' value='$apiKey' required>
 			</div>
 			<div class='master'>
 				<label for='characterId'>characterId:</label>
-				<input id='characterId' name='characterId' type='number'>
+				<input id='characterId' name='characterId' type='number' value='$characterId' required>
 			</div>
 			<div class='slave'>
 				<label for='masterName'>Master name:</label>
-				<input id='masterName' name='masterName' type='text'>
+				<input id='masterName' name='masterName' type='text' value='$masterName' required>
 			</div>
 			<div>
 				<label>&nbsp;</label>
@@ -130,11 +130,23 @@ if (!class_exists("template_sys_register")) {
 		{
 			$('.slave').hide();
 			$('.master').show();
+
+			$('#masterName').attr('required', false);
+
+			$('#userId').attr('required', true);
+			$('#apiKey').attr('required', true);
+			$('#characterId').attr('required', true);
 		}
 		function switchToSlave()
 		{
 			$('.master').hide();
 			$('.slave').show();
+
+			$('#userId').attr('required', false);
+			$('#apiKey').attr('required', false);
+			$('#characterId').attr('required', false);
+
+			$('#masterName').attr('required', true);
 		}
 		function initSwitch()
 		{
