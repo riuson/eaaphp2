@@ -25,16 +25,7 @@ if (!class_exists("template_sys_logout")) {
 	function bindContent()
 	{
 		updateStatus();
-		$.ajax({
-			type: \"POST\",
-			url: \"backend.php\",
-			cache: false,
-			data: \"call=sys_menu\",
-			success: function(html) {
-				$(\"#menu\").html(html);
-				$(\"#menu a\").bind(\"click\", updateMenu);
-			}
-		});
+		updateMenuDefault();
 	}
 </script>";
 			return $result;

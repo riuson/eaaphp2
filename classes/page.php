@@ -41,6 +41,20 @@ class Page {
 					loadContent($(this).attr('href'));
 					return false;
 				}
+				function updateMenuDefault()
+				{
+					$.ajax({
+						type: \"POST\",
+						url: \"backend.php\",
+						cache: false,
+						data: \"call=sys_menu\",
+						success: function(html) {
+							$(\"#menu\").html(html);
+							$(\"#menu a\").bind(\"click\", updateMenu);
+						}
+					});
+					return false;
+				}
 				function loadContent(modeName)
 				{
 					$.ajax({
