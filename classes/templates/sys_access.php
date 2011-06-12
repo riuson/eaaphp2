@@ -36,7 +36,7 @@ if (!class_exists("template_sys_access")) {
 				if ( in_array($value, $selectedUser['access']))
 						$checked = "checked";
 				$result .= "<div>
-					<input name='$value' id='$value' type='checkbox' value='$value' $checked>$key</input>
+					<input name='cb_$value' id='$value' type='checkbox' value='true' $checked>$key</input>
 					</div>";
 			}
 
@@ -45,19 +45,26 @@ if (!class_exists("template_sys_access")) {
 				<input type='submit' value='Send'>
 				<input type='reset' value='Reset'>
 			</div>
+			<div>
+				$updateMessage
+			</div>
 		</fieldset>
 	</form>
 	<script>
 		function bindContent()
 		{
-			$(\"#users a\").bind(\"click\", switchUser);
+			$('#users a').bind(\"click\", switchUser);
 			$('#form_login').submit(function(){
+				var aData = $(this).serializeArray();
+				aData.push( { name: 'call', value: 'sys_access' } );
+				aData.push( { name: 'submit', value: 'changes' } );
+				aData.push( { name: 'selectedUser', value: '$selectedUser[login]' } );
 				$.ajax({
-					type: \"POST\",
-					url: \"backend.php\",
-					data: \"call=sys_access\",
+					type: 'POST',
+					url: 'backend.php',
+					data: aData,
 					success: function(html){
-						$(\"#content\").html(html);
+						$('#content').html(html);
 						bindContent();
 						updateStatus();
 					}

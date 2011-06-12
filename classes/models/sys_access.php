@@ -12,7 +12,7 @@ if (!class_exists("model_sys_access")) {
 		private $selectedUser;
 		private $selectedModes;
 
-		function prepare() {
+		public function prepare() {
 
 			$this->users = array();
 			$this->limitedModes = array();
@@ -65,6 +65,65 @@ if (!class_exists("model_sys_access")) {
 				}
 			}
 			//print_r($this->selectedUser);
+		}
+
+		public function updateRights() {
+
+			// print_r($_POST);
+			$result = false;
+
+			if (isset($_POST['selectedUser']) && !empty($_POST['selectedUser'])) {
+
+				$selectedUser = $_POST['selectedUser'];
+
+				// check: this user can update access rights to selected user
+				if ($this->registry['user']->getAccountData($data)) {
+
+					// get slave user info
+					$master = $data['characterName'];
+					$query = sprintf("select * from api_users where master = '%s' and login = '%s';",
+									$this->registry['db']->escape($master),
+									$this->registry['db']->escape($selectedUser));
+
+					//echo $query;
+					$accessRightsStr = "";
+					$slaveAccountId = -1;
+
+					// if user found with this login and master
+					$qr = $this->registry['db']->query($query);
+					if ($qr) {
+
+						$row = $qr->fetch_assoc();
+						if ($row) {
+
+							$slaveAccountId = $row['accountId'];
+
+							// get selected acces right from $_POST
+							$rights = array();
+							foreach ($_POST as $key => $value) {
+
+								if ($value == true && preg_match("/(?<=cb_).+/", $key, $matches)) {
+
+									array_push($rights, $matches[0]);
+								}
+							}
+							$accessRightsStr = implode(",", $rights);
+						}
+						$qr->close();
+					}
+
+					// update access rights in db
+					$query = sprintf("update api_users set access = '%s' where accountId = '%d';",
+									$this->registry['db']->escape($accessRightsStr),
+									$this->registry['db']->escape($slaveAccountId));
+
+					$this->registry['db']->query($query);
+					if ($this->registry['db']->getAffectedRows() == 1)
+							$result = true;
+				}
+			}
+
+			return $result;
 		}
 
 		public function getUsers() {
