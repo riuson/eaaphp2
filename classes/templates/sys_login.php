@@ -30,7 +30,7 @@ if (!class_exists("template_sys_login")) {
 				<input id='password' name='password' type='text' required>
 			</div>
 			<div>
-				<label>&nbsp;</label>
+				<label><a href='mode_register'>Registration</a></label>
 				<input type='submit' value='Send'>
 			</div>
 			<div class='login_error'>
@@ -41,6 +41,7 @@ if (!class_exists("template_sys_login")) {
 	<script>
 		function bindContent()
 		{
+			$(\"#form_login a\").bind(\"click\", doRegister);
 			$('#form_login').submit(function(){
 					$.ajax({
 						type: \"POST\",
@@ -75,6 +76,20 @@ if (!class_exists("template_sys_login")) {
 						$(\"#menu a\").bind(\"click\", updateMenu);
 					}
 				});
+		}
+		function doRegister()
+		{
+			$.ajax({
+				type: \"POST\",
+				url: \"backend.php\",
+				cache: false,
+				data: \"call=sys_register\",
+				success: function(html) {
+					$(\"#content\").html(html);
+					bindContent();
+				}
+			});
+			return false;
 		}
 	</script>
 </div>";
