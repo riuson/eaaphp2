@@ -168,7 +168,7 @@ class User {
 
 		$result = array();
 		if ($this->isLogged()) {
-			$qr = $this->registry['db']->query(sprintf("select access from api_users where accountId = '%s'",
+			$qr = $this->registry['db']->query(sprintf("select access from api_users where accountId = '%d'",
 									$this->registry['db']->escape($this->accountId)));
 			$row = $qr->fetch_assoc();
 			if ($row) {
@@ -183,6 +183,50 @@ class User {
 					if (in_array($value, $accessList)) {
 						$result[$key] = $value;
 					}
+				}
+			}
+		}
+		return $result;
+	}
+
+	public function getAccountData(&$data) {
+
+		$result = false;
+		$data = array();
+		if ($this->isLogged()) {
+			$qr = $this->registry['db']->query(sprintf("select * from api_users where accountId = '%d'",
+									$this->registry['db']->escape($this->accountId)));
+			$row = $qr->fetch_assoc();
+			if ($row) {
+
+				// get access lsit from DB and split by comma
+				$data = $row;
+				$result = true;
+			}
+		}
+		return $result;
+	}
+
+	public function getMasterData(&$data) {
+
+		$result = false;
+
+		if ($this->getAccountData($data)) {
+
+			if (!empty($data['master'])) {
+
+				$qr = $this->registry['db']->query(sprintf("select * from api_users where characterName = '%s'",
+										$this->registry['db']->escape($data['master'])));
+				$row = $qr->fetch_assoc();
+				if ($row) {
+
+					// get access lsit from DB and split by comma
+					$data['accountId'] = $row['accountId'];
+					$data['password'] = $row['password'];
+					$data['userId'] = $row['userId'];
+					$data['apiKey'] = $row['apiKey'];
+					$data['characterId'] = $row['characterId'];
+					$result = true;
 				}
 			}
 		}

@@ -5,3 +5,10 @@
 	color: silver;
 	font: bold 120% serif;
 }
+div.left {
+	/*border-right:2px dotted #717dc9;*/
+	width:198px;
+	height:400px;
+	float:left;
+	display: table;
+}
