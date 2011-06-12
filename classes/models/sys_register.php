@@ -76,15 +76,6 @@ if (!class_exists("model_sys_register")) {
 			}
 			else
 				$this->data['masterName'] = "";
-
-			$loginSuccess = false;// $this->registry['user']->isLogged();
-
-			if (!$this->data['firstAttempt'] && !$loginSuccess)
-				$registerFailed = true;
-			else
-				$registerFailed = false;
-			$this->data['registerFailed'] = $registerFailed;
-			$this->data['loginSuccess'] = $loginSuccess;
 		}
 
 		public function getData() {

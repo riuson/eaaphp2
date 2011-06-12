@@ -47,7 +47,7 @@ class User {
 		$this->username = "";
 		$_SESSION["User"] = $this;
 
-		if (!empty($username) && !is_array($username) && !empty($password) && !is_array($password)) {
+		if (!empty($username) && !empty($password)) {
 			// connect db
 
 			if ($this->registry['db']->isValid()) {
@@ -67,6 +67,55 @@ class User {
 					$this->accountId = $row["accountId"];
 					$this->username = $username;
 					$_SESSION["User"] = $this;
+				}
+			}
+		}
+		return $result;
+	}
+
+	public function register($username, $password, $email, $characterName, $apikeyOwner, $userId, $apiKey, $characterId, $masterName) {
+
+		$result = false;
+		if (!empty($username) && !empty($password) && !empty($email) && !empty($apikeyOwner)) {
+
+			if ($apikeyOwner == "master") {
+
+				if (!empty($characterName) && !empty($userId) && is_numeric($userId) && !empty($apiKey) && !empty($characterId) && is_numeric($characterId)) {
+
+					$query = sprintf(
+									"insert into api_users " .
+									"(login, password, email, userId, apiKey, characterId, characterName)" .
+									"values ('%s', md5('%s'), '%s', '%d', '%s', '%d', '%s')",
+									$this->registry['db']->escape($username),
+									$this->registry['db']->escape($password),
+									$this->registry['db']->escape($email),
+									$this->registry['db']->escape($userId),
+									$this->registry['db']->escape($apiKey),
+									$this->registry['db']->escape($characterId),
+									$this->registry['db']->escape($characterName)
+					);
+					echo $query;
+					$this->registry['db']->query($query);
+					//$this->registry['db']->affectedRows();
+					$result = true;
+				}
+			} else if ($apikeyOwner == "slave") {
+
+				if (!empty($masterName)) {
+
+					$query = sprintf(
+									"insert into api_users " .
+									"(login, password, email, master, characterName, userId, characterId)" .
+									"values ('%s', md5('%s'), '%s', '%s', '%s', 0, 0)",
+									$this->registry['db']->escape($username),
+									$this->registry['db']->escape($password),
+									$this->registry['db']->escape($email),
+									$this->registry['db']->escape($masterName),
+									$this->registry['db']->escape($characterName)
+					);
+					echo $query;
+					$this->registry['db']->query($query);
+					$result = true;
 				}
 			}
 		}

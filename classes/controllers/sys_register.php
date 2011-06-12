@@ -18,10 +18,19 @@ if (!class_exists("controller_sys_register")) {
 			$model->prepare();
 			$data = $model->getData();
 
-			$this->registry['template']->set('data', $data);
+			$registerSuccess = false;
 
-			if ($data['loginSuccess']) {
-				$result = $this->registry['template']->show('sys_login_success');
+			if ($this->registry['user']->register($data['username'], $data['password'], $data['email'], $data['characterName'], $data['apikeyOwner'], $data['userId'], $data['apiKey'], $data['characterId'], $data['masterName'])) {
+				$this->registry['user']->login($data['username'], $data['password']);
+				if ($this->registry['user']->isLogged()) {
+
+					$registerSuccess = true;
+				}
+			}
+
+			$this->registry['template']->set('data', $data);
+			if ($registerSuccess) {
+				$result = $this->registry['template']->show('sys_register_success');
 			} else {
 				$result = $this->registry['template']->show('sys_register');
 			}
