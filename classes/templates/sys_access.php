@@ -13,34 +13,45 @@ if (!class_exists("template_sys_access")) {
 			extract($this->vars);
 
 			$usersListHtml = "<ul>";
-			foreach ($users as $user) {
+			$count = count($users);
+			$userLogin = "";
 
-				if ($selectedUser['login'] != $user['login'])
-					$usersListHtml .= "<li><a href='$user[login]'>$user[characterName] ($user[email])</a></li>";
-				else
-					$usersListHtml .= "<li>$user[characterName] ($user[email])</li>";
+			if ($count > 0) {
+				foreach ($users as $user) {
+
+					if (!empty($selectedUser['login']) && $selectedUser['login'] != $user['login'])
+						$usersListHtml .= "<li><a href='$user[login]'>$user[characterName] ($user[email])</a></li>";
+					else
+						$usersListHtml .= "<li>$user[characterName] ($user[email])</li>";
+				}
+				$userLogin = $selectedUser['login'];
 			}
 			$usersListHtml .= "</ul>";
 
 			//print_r($limitedModes);
 			$result = "<p>Access settings</p>
 <div class='login'>
-			<div class='left' id='users'>Slave users: $usersListHtml</div>
+			<div class='left' id='users'>Slave users: $count<br>$usersListHtml</div>";
+
+			if ($count > 0) {
+
+				$result .= "
 	<form id='form_login'>
 		<fieldset>
 			<legend>Select character and access rights</legend>";
 
-			foreach ($limitedModes as $key => $value) {
+				foreach ($limitedModes as $key => $value) {
 
-				$checked = "";
-				if ( in_array($value, $selectedUser['access']))
+					$checked = "";
+					print_r($selectedUser);
+					if (in_array($value, $selectedUser['access']))
 						$checked = "checked";
-				$result .= "<div>
+					$result .= "<div>
 					<input name='cb_$value' id='$value' type='checkbox' value='true' $checked>$key</input>
 					</div>";
-			}
+				}
 
-			$result .= "
+				$result .= "
 			<div>
 				<input type='submit' value='Send'>
 				<input type='reset' value='Reset'>
@@ -49,7 +60,9 @@ if (!class_exists("template_sys_access")) {
 				$updateMessage
 			</div>
 		</fieldset>
-	</form>
+	</form>";
+			}
+			$result .= "
 	<script>
 		function bindContent()
 		{
@@ -58,7 +71,7 @@ if (!class_exists("template_sys_access")) {
 				var aData = $(this).serializeArray();
 				aData.push( { name: 'call', value: 'sys_access' } );
 				aData.push( { name: 'submit', value: 'changes' } );
-				aData.push( { name: 'selectedUser', value: '$selectedUser[login]' } );
+				aData.push( { name: 'selectedUser', value: '$userLogin' } );
 				$.ajax({
 					type: 'POST',
 					url: 'backend.php',
