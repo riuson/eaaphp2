@@ -15,6 +15,10 @@ if (!class_exists("controller_mode_visitors")) {
 			return true;
 		}
 
+		function loginRequired() {
+			return true;
+		}
+
 		function process() {
 
 			$showTemplate = true;

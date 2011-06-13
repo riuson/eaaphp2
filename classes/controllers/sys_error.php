@@ -12,6 +12,10 @@ if (!class_exists("controller_sys_error")) {
 			return "Error";
 		}
 
+		function loginRequired() {
+			return false;
+		}
+
 		function process() {
 
 			if (isset($_POST["call"]))

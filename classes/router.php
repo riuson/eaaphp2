@@ -18,6 +18,14 @@ Class Router {
 		$this->getController($controllerClassName);
 		// Create controller (__autoload)
 		$controller = new $controllerClassName($this->registry);
+		// additional control: some modes require logged user
+		if ($controller->loginRequired()) {
+			if (!$this->registry['user']->isLogged()) {
+
+				$controllerError = new controller_sys_error($this->registry);
+				return $controllerError->process();
+			}
+		}
 		// get data
 		return $controller->process();
 	}
