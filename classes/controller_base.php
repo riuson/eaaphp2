@@ -13,5 +13,6 @@ Abstract Class Controller_Base {
 	}
 
 	abstract function process();
+	abstract function loginRequired();
 }
 ?>

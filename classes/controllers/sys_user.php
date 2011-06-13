@@ -12,6 +12,10 @@ if (!class_exists("controller_sys_user")) {
 			return "User account";
 		}
 
+		function loginRequired() {
+			return true;
+		}
+
 		function process() {
 
 			//print_r($_POST);

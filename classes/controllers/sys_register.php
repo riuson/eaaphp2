@@ -12,6 +12,10 @@ if (!class_exists("controller_sys_register")) {
 			return "Register";
 		}
 
+		function loginRequired() {
+			return false;
+		}
+
 		function process() {
 
 			$model = new model_sys_register($this->registry);

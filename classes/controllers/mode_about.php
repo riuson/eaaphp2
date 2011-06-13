@@ -15,6 +15,10 @@ if (!class_exists("controller_mode_about")) {
 			return false;
 		}
 
+		function loginRequired() {
+			return false;
+		}
+
 		function process() {
 
 			return $this->registry['template']->show('mode_about');

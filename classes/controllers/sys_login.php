@@ -12,6 +12,10 @@ if (!class_exists("controller_sys_login")) {
 			return "Login";
 		}
 
+		function loginRequired() {
+			return false;
+		}
+
 		function process() {
 
 			$firstAttempt = true;

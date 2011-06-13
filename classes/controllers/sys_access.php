@@ -12,6 +12,10 @@ if (!class_exists("controller_sys_access")) {
 			return "Access settings";
 		}
 
+		function loginRequired() {
+			return true;
+		}
+
 		function process() {
 
 			$model = new model_sys_access($this->registry);

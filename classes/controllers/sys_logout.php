@@ -12,6 +12,10 @@ if (!class_exists("controller_sys_logout")) {
 			return "Logout";
 		}
 
+		function loginRequired() {
+			return false;
+		}
+
 		function process() {
 
 			$this->registry['user']->logout();
