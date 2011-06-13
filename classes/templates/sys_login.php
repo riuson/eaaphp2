@@ -43,39 +43,19 @@ if (!class_exists("template_sys_login")) {
 		{
 			$(\"#form_login a\").bind(\"click\", doRegister);
 			$('#form_login').submit(function(){
-					$.ajax({
-						type: \"POST\",
-						url: \"backend.php\",
-						data: \"call=sys_login&username=\" + $(\"#username\").val() + \"&password=\" + $(\"#password\").val(),
-						success: function(html){
-							$(\"#content\").html(html);
-							bindContent();
-							updateStatus();
-
-							$.ajax({
-								type: \"POST\",
-								url: \"backend.php\",
-								cache: false,
-								data: \"call=sys_menu\",
-								success: function(html) {
-									$(\"#menu\").html(html);
-									$(\"#menu a\").bind(\"click\", updateMenu);
-								}
-							});
-						}
-					});
-					return false;
-				});
 				$.ajax({
 					type: \"POST\",
 					url: \"backend.php\",
-					cache: false,
-					data: \"call=sys_menu\",
-					success: function(html) {
-						$(\"#menu\").html(html);
-						$(\"#menu a\").bind(\"click\", updateMenu);
+					data: \"call=sys_login&username=\" + $(\"#username\").val() + \"&password=\" + $(\"#password\").val(),
+					success: function(html){
+						$(\"#content\").html(html);
+						bindContent();
+						updateStatus();
 					}
 				});
+				return false;
+			});
+			updateMenuDefault();
 		}
 		function doRegister()
 		{

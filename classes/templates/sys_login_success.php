@@ -18,6 +18,7 @@ if (!class_exists("template_sys_login_success")) {
 <script>
 	function bindContent()
 	{
+		updateMenuDefault();
 	}
 </script>";
 			return $result;

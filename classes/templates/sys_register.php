@@ -98,31 +98,11 @@ if (!class_exists("template_sys_register")) {
 							$(\"#content\").html(html);
 							bindContent();
 							updateStatus();
-
-							$.ajax({
-								type: \"POST\",
-								url: \"backend.php\",
-								cache: false,
-								data: \"call=sys_menu\",
-								success: function(html) {
-									$(\"#menu\").html(html);
-									$(\"#menu a\").bind(\"click\", updateMenu);
-								}
-							});
 						}
 					});
 					return false;
 				});
-			$.ajax({
-				type: \"POST\",
-				url: \"backend.php\",
-				cache: false,
-				data: \"call=sys_menu\",
-				success: function(html) {
-					$(\"#menu\").html(html);
-					$(\"#menu a\").bind(\"click\", updateMenu);
-				}
-			});
+			updateMenuDefault();
 			$('#master').bind(\"click\", switchToMaster);
 			$('#slave').bind(\"click\", switchToSlave);
 			initSwitch();
