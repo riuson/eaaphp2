@@ -16,11 +16,6 @@ if (!class_exists("model_sys_status")) {
 			$user = $this->registry['user'];
 
 			$username = $user->UserName();
-			if ($user->IsLogged()) {
-				$sys_callback = "logout";
-			} else {
-				$sys_callback = "login";
-			}
 
 			$api = new Api_Server_Status($this->registry, $user);
 			$api->getStatus($serverOpen, $onlinePlayers);
@@ -30,7 +25,6 @@ if (!class_exists("model_sys_status")) {
 			$this->status['server_time'] = date("H:i:s");
 			$this->status['user_logged'] = $user->IsLogged();
 			$this->status['user_name'] = $user->UserName();
-			$this->status['callback'] = $sys_callback;
 		}
 
 		public function getStatus() {
