@@ -123,6 +123,61 @@ class User {
 		return $result;
 	}
 
+	public function modify($password, $email, $characterName, $apikeyOwner, $userId, $apiKey, $characterId, $masterName) {
+
+		$result = false;
+		if ($this->accountId > 0 && $this->isLogged() && !empty($password) && !empty($email) && !empty($apikeyOwner)) {
+
+			if ($apikeyOwner == "master") {
+
+				if (!empty($characterName) && !empty($userId) && is_numeric($userId) && !empty($apiKey) && !empty($characterId) && is_numeric($characterId)) {
+
+					$modes = array();
+					foreach ($this->registry['modes']->getLimitedModes() as $key => $value) {
+						array_push($modes, $value);
+					}
+					$query = sprintf(
+									"update api_users set " .
+									"password = md5('%s'), email = '%s', userId = %d, apiKey = '%s', characterId = %d, characterName = '%s', master = '', access = '%s' " .
+									"where accountId = %d;",
+									$this->registry['db']->escape($password),
+									$this->registry['db']->escape($email),
+									$this->registry['db']->escape($userId),
+									$this->registry['db']->escape($apiKey),
+									$this->registry['db']->escape($characterId),
+									$this->registry['db']->escape($characterName),
+									$this->registry['db']->escape(implode(",", $modes)),
+									$this->registry['db']->escape($this->accountId)
+					);
+					//echo $query;
+					$this->registry['db']->query($query);
+					if ($this->registry['db']->getAffectedRows() == 1)
+						$result = true;
+				}
+			} else if ($apikeyOwner == "slave") {
+
+				if (!empty($masterName)) {
+
+					$query = sprintf(
+									"update api_users set " .
+									"password = md5('%s'), email = '%s', master = '%s', characterName = '%s', userId = 0, characterId = 0, access = '' " .
+									"where accountId = %d;",
+									$this->registry['db']->escape($password),
+									$this->registry['db']->escape($email),
+									$this->registry['db']->escape($masterName),
+									$this->registry['db']->escape($characterName),
+									$this->registry['db']->escape($this->accountId)
+					);
+					//echo $query;
+					$this->registry['db']->query($query);
+					if ($this->registry['db']->getAffectedRows() == 1)
+						$result = true;
+				}
+			}
+		}
+		return $result;
+	}
+
 	public function logout() {
 		$result = false;
 		$this->logged = false;
