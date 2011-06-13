@@ -11,9 +11,9 @@ if (!class_exists("template_sys_status")) {
 
 			extract($this->vars['status']);
 			if ($user_logged) {
-				$user_info = "$user_name. <a href='$callback'>Logout</a>";
+				$user_info = "<a href='sys_logout'>Logout</a> [ <a href='sys_user'>$user_name<a/> ]";
 			} else {
-				$user_info = "<a href='$callback'>Login</a>";
+				$user_info = "<a href='sys_login'>Login</a>";
 			}
 
 			if (($server_pilots % 10) == 1)
@@ -41,7 +41,7 @@ $user_info
 			type: \"POST\",
 			url: \"backend.php\",
 			cache: false,
-			data: \"call=sys_$callback\",
+			data: \"call=\" + $(this).attr('href'),
 			success: function(html) {
 				$(\"#content\").html(html);
 				bindContent();
