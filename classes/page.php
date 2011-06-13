@@ -57,14 +57,23 @@ class Page {
 				}
 				function loadContent(modeName)
 				{
+					var aData = {
+						call: modeName
+					}
+					loadContentWithData(aData);
+					return false;
+				}
+				function loadContentWithData(aData)
+				{
 					$.ajax({
 						type: \"POST\",
 						url: \"backend.php\",
 						cache: false,
-						data: \"call=\" + modeName,
+						data: aData,
 						success: function(html) {
 							$(\"#content\").html(html);
 							bindContent();
+							updateStatus();
 						}
 					});
 					return false;
@@ -72,7 +81,6 @@ class Page {
 
 				$(document).ready(function() {
 				
-					updateStatus();
 					loadContent('mode_about');
 
 					$.ajax({

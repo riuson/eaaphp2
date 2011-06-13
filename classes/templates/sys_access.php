@@ -43,7 +43,6 @@ if (!class_exists("template_sys_access")) {
 				foreach ($limitedModes as $key => $value) {
 
 					$checked = "";
-					print_r($selectedUser);
 					if (in_array($value, $selectedUser['access']))
 						$checked = "checked";
 					$result .= "<div>
@@ -72,31 +71,17 @@ if (!class_exists("template_sys_access")) {
 				aData.push( { name: 'call', value: 'sys_access' } );
 				aData.push( { name: 'submit', value: 'changes' } );
 				aData.push( { name: 'selectedUser', value: '$userLogin' } );
-				$.ajax({
-					type: 'POST',
-					url: 'backend.php',
-					data: aData,
-					success: function(html){
-						$('#content').html(html);
-						bindContent();
-						updateStatus();
-					}
-				});
+				loadContentWithData(aData);
 				return false;
 			});
 		}
 		function switchUser()
 		{
-			$.ajax({
-				type: \"POST\",
-				url: \"backend.php\",
-				data: \"call=sys_access&selectedUser=\" + $(this).attr('href'),
-				success: function(html){
-					$(\"#content\").html(html);
-					bindContent();
-					updateStatus();
-				}
-			});
+			var aData = {
+				call: 'sys_access',
+				selectedUser: $(this).attr('href')
+			}
+			loadContentWithData(aData);
 			return false;
 		}
 	</script>

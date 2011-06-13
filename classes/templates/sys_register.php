@@ -90,17 +90,7 @@ if (!class_exists("template_sys_register")) {
 					characterId:  $('#characterId').val(),
 					masterName:  $('#masterName').val()
 				}
-				$.ajax({
-						type: \"POST\",
-						url: \"backend.php\",
-						data: aData,
-						success: function(html){
-							$(\"#content\").html(html);
-							bindContent();
-							updateStatus();
-						}
-					});
-					return false;
+				loadContentWithData(aData);
 				});
 			updateMenuDefault();
 			$('#master').bind(\"click\", switchToMaster);

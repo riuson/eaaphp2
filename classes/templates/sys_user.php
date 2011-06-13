@@ -102,18 +102,9 @@ if (!class_exists("template_sys_user")) {
 					characterId:  $('#characterId').val(),
 					master:  $('#master').val()
 				}
-				$.ajax({
-						type: 'POST',
-						url: 'backend.php',
-						data: aData,
-						success: function(html){
-							$('#content').html(html);
-							bindContent();
-							updateStatus();
-						}
-					});
-					return false;
-				});
+				loadContentWithData(aData);
+				return false;
+			});
 			updateMenuDefault();
 			$('#masterMode').bind('click', switchToMaster);
 			$('#slaveMode').bind('click', switchToSlave);

@@ -37,16 +37,7 @@ $user_info
 	}
 	function doStatus()
 	{
-		$.ajax({
-			type: \"POST\",
-			url: \"backend.php\",
-			cache: false,
-			data: \"call=\" + $(this).attr('href'),
-			success: function(html) {
-				$(\"#content\").html(html);
-				bindContent();
-			}
-		});
+		loadContent($(this).attr('href'));
 		return false;
 	}
 </script>";
