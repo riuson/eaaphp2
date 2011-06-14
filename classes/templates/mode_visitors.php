@@ -47,7 +47,7 @@ if (!class_exists("template_mode_visitors")) {
 		\"bProcessing\": true,
 		\"bServerSide\": true,
 		\"bSort\": true,
-		\"bAutoWidth\" : false,
+		\"bAutoWidth\" : true,
 		\"sDom\": '<\"H\"Tfr>t<\"F\"ip>',
 		\"oTableTools\": {
 			\"aButtons\": [
@@ -74,6 +74,7 @@ if (!class_exists("template_mode_visitors")) {
 			} );
 			}
 		});
+		$('#example').css('width', '100%');
 	}
 </script>
 ";

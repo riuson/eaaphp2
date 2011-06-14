@@ -29,13 +29,14 @@ div.header {
 /* menu block */
 div.menu {
 	/*border-right:2px dotted #717dc9;*/
-	width:198px;
+	width:20%;
 	height:400px;
 	float:left
 }
 /* content block */
 div.content {
 	height:400px;
+	width: 70%;
 	margin-left:200px;
 	margin-bottom: 10px;
 	padding-left:20px;

@@ -11,7 +11,7 @@ if (!class_exists("model_mode_eve_conquerable_station_list")) {
 
 		function prepare() {
 
-			$aColumns = array('stationName', 'solarSystemName', 'corporationName');
+			$aColumns = array('stationName', 'solarSystemName', 'corporationId', 'corporationName');
 
 			/* Indexed column (used for fast and accurate table cardinality) */
 			$sIndexColumn = "stationId";

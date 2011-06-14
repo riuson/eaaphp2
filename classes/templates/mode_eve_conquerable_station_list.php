@@ -15,11 +15,12 @@ if (!class_exists("template_mode_eve_conquerable_station_list")) {
 			if ($showTemplate) {
 
 				$result = "<p>Conquerable Stations List</p>
-<table id=\"example\">
+<table id=\"stations\">
 	<thead>
 		<tr>
 			<th>Station</th>
 			<th>Solar System</th>
+			<th>CorporationId</th>
 			<th>Corporation</th>
 		</tr>
 	</thead>
@@ -30,6 +31,7 @@ if (!class_exists("template_mode_eve_conquerable_station_list")) {
 		<tr>
 			<th>Station</th>
 			<th>Solar System</th>
+			<th>CorporationId</th>
 			<th>Corporation</th>
 		</tr>
 	</tfoot>
@@ -37,13 +39,21 @@ if (!class_exists("template_mode_eve_conquerable_station_list")) {
 <script>
 	function bindContent()
 	{
-		$('#example').dataTable( {
+		$('#stations').dataTable( {
+		'aoColumns': [
+			null,
+			null,
+			{ 'bSearchable': false, 'bVisible': false },
+			{ 'fnRender': function ( oObj ) {
+				return \"<a href='\" + oObj.aData[2] +\"'>\"+ oObj.aData[3] + \"</a>\";
+			} }
+		],
 		\"aaSorting\": [[ 0, \"desc\" ]],
 		\"bJQueryUI\": true,
 		\"bProcessing\": true,
 		\"bServerSide\": true,
 		\"bSort\": true,
-		\"bAutoWidth\" : false,
+		\"bAutoWidth\" : true,
 		\"sDom\": '<\"H\"Tfr>t<\"F\"ip>',
 		\"oTableTools\": {
 			\"aButtons\": [
@@ -55,7 +65,6 @@ if (!class_exists("template_mode_eve_conquerable_station_list")) {
 				}
 			]
 		},
-
 		\"sPaginationType\": \"full_numbers\",
 		\"sAjaxSource\": \"backend.php\",
 		\"fnServerData\": function ( sSource, aoData, fnCallback ) {
@@ -70,6 +79,7 @@ if (!class_exists("template_mode_eve_conquerable_station_list")) {
 			} );
 			}
 		});
+		$('#stations').css('width', '100%');
 	}
 </script>
 ";
