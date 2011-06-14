@@ -45,7 +45,8 @@ if (!class_exists("template_mode_eve_conquerable_station_list")) {
 			null,
 			{ 'bSearchable': false, 'bVisible': false },
 			{ 'fnRender': function ( oObj ) {
-				return \"<a href='\" + oObj.aData[2] +\"'>\"+ oObj.aData[3] + \"</a>\";
+
+				return \"<a class='.showCorp' href='\" + oObj.aData[2] +\"'>\"+ oObj.aData[3] + \"</a>\";
 			} }
 		],
 		\"aaSorting\": [[ 0, \"desc\" ]],
@@ -80,6 +81,15 @@ if (!class_exists("template_mode_eve_conquerable_station_list")) {
 			}
 		});
 		$('#stations').css('width', '100%');
+		$('#stations a').live('click', function()
+		{
+			var aData = {
+				call: 'mode_corp_corporation_sheet',
+				corporationId: $(this).attr('href')
+			}
+			loadContentWithData(aData);
+			return false;
+		});
 	}
 </script>
 ";
