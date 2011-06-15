@@ -4,9 +4,9 @@
  * Visitors log list tempalte.
  */
 
-if (!class_exists("template_mode_visitors")) {
+if (!class_exists("template_mode_eve_conquerable_station_list")) {
 
-	Class template_mode_visitors Extends Template_Base {
+	Class template_mode_eve_conquerable_station_list Extends Template_Base {
 
 		public function getView() {
 
@@ -14,15 +14,14 @@ if (!class_exists("template_mode_visitors")) {
 
 			if ($showTemplate) {
 
-				$result = "<p>Visitors list</p>
-<table id=\"example\">
+				$result = "<p>Conquerable Stations List</p>
+<table id=\"stations\">
 	<thead>
 		<tr>
-			<th>Date</th>
-			<th>Address</th>
-			<th>User Agent</th>
-			<th>Login</th>
-			<th>Uri</th>
+			<th>Station</th>
+			<th>Solar System</th>
+			<th>CorporationId</th>
+			<th>Corporation</th>
 		</tr>
 	</thead>
 	<tbody>
@@ -30,18 +29,26 @@ if (!class_exists("template_mode_visitors")) {
 	</tbody>
 	<tfoot>
 		<tr>
-			<th>Date</th>
-			<th>Address</th>
-			<th>User Agent</th>
-			<th>Login</th>
-			<th>Uri</th>
+			<th>Station</th>
+			<th>Solar System</th>
+			<th>CorporationId</th>
+			<th>Corporation</th>
 		</tr>
 	</tfoot>
 </table>
 <script>
 	function bindContent()
 	{
-		$('#example').dataTable( {
+		$('#stations').dataTable( {
+		'aoColumns': [
+			null,
+			null,
+			{ 'bSearchable': false, 'bVisible': false },
+			{ 'fnRender': function ( oObj ) {
+
+				return \"<a class='.showCorp' href='\" + oObj.aData[2] +\"'>\"+ oObj.aData[3] + \"</a>\";
+			} }
+		],
 		\"aaSorting\": [[ 0, \"desc\" ]],
 		\"bJQueryUI\": true,
 		\"bProcessing\": true,
@@ -59,11 +66,10 @@ if (!class_exists("template_mode_visitors")) {
 				}
 			]
 		},
-
 		\"sPaginationType\": \"full_numbers\",
 		\"sAjaxSource\": \"backend.php\",
 		\"fnServerData\": function ( sSource, aoData, fnCallback ) {
-			aoData.push( { \"name\": \"call\", \"value\": \"mode_visitors\" } );
+			aoData.push( { \"name\": \"call\", \"value\": \"mode_eve_conquerable_station_list\" } );
 			aoData.push( { \"name\": \"sender\", \"value\": \"datatables\" } );
 			$.ajax( {
 				\"dataType\": 'json',
@@ -74,7 +80,16 @@ if (!class_exists("template_mode_visitors")) {
 			} );
 			}
 		});
-		$('#example').css('width', '100%');
+		$('#stations').css('width', '100%');
+		$('#stations a').live('click', function()
+		{
+			var aData = {
+				call: 'mode_corp_corporation_sheet',
+				corporationId: $(this).attr('href')
+			}
+			loadContentWithData(aData);
+			return false;
+		});
 	}
 </script>
 ";
