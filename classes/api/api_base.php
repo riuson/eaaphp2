@@ -128,6 +128,8 @@ class Api_Base {
 		curl_setopt($ch, CURLOPT_POST, count($params));
 		curl_setopt($ch, CURLOPT_POSTFIELDS, $params);
 		curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+		curl_setopt($ch, CURLOPT_TIMEOUT, 1000);
+		curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 1000);
 		// read response to string
 		$serverResponse = curl_exec($ch);
 		$this->writeDebugMsg("post fields " . $uri . "<br>");
