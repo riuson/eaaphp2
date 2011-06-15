@@ -18,7 +18,10 @@ if (!class_exists("model_sys_status")) {
 			$username = $user->UserName();
 
 			$api = new Api_Server_Status($this->registry, $user);
-			$api->getStatus($serverOpen, $onlinePlayers);
+			if (!$api->getStatus($serverOpen, $onlinePlayers)) {
+				$serverOpen = false;
+				$onlinePlayers = 0;
+			}
 
 			$this->status['server_online'] = $serverOpen;
 			$this->status['server_pilots'] = $onlinePlayers;
