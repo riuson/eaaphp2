@@ -35,6 +35,10 @@ class User {
 		return $this->logged;
 	}
 
+	public function getAccountId() {
+		return $this->accountId;
+	}
+
 	public function userName() {
 		return $this->username;
 	}
