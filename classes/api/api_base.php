@@ -18,7 +18,6 @@ class Api_Base {
 
 
 	private $apiroot;
-	private $accountId;
 	protected $document;
 	protected $showinfo;
 	protected $updateFromCache;
@@ -30,7 +29,6 @@ class Api_Base {
 		$this->user = $user;
 
 		$this->apiroot = "http://api.eve-online.com";
-		$this->accountId = 1;
 		$this->showinfo = false;
 		$this->updateFromCache = true;
 	}
@@ -165,9 +163,9 @@ class Api_Base {
 	private function checkCache($uri, &$cached, &$cachedUntil, &$mustGetFromCache, &$cachedValue) {
 
 		$recordExists = false;
-
+		print_r($this->user);
 		$query = sprintf("select * from api_cache where accountId = '%d' and uri = '%s' order by `cached` desc limit 1;",
-						$this->registry['db']->escape($this->accountId),
+						$this->registry['db']->escape($this->user->getAccountId()),
 						$this->registry['db']->escape($uri));
 
 		$qr = $this->registry['db']->query($query);
@@ -220,7 +218,7 @@ class Api_Base {
 
 		$query = sprintf("insert into api_cache (accountId, uri, cached, cachedUntil, cachedValue) " .
 						"values(%d, '%s', '%s', '%s', '%s');",
-						$this->accountId,
+						$this->user->getAccountId(),
 						$this->registry['db']->escape($uri),
 						$this->registry['db']->escape($cachedStr),
 						$this->registry['db']->escape($cachedUntilStr),
