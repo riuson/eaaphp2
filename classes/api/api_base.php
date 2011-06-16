@@ -165,7 +165,6 @@ class Api_Base {
 	private function checkCache($uri, &$cached, &$cachedUntil, &$mustGetFromCache, &$cachedValue) {
 
 		$recordExists = false;
-		print_r($this->user);
 		$query = sprintf("select * from api_cache where accountId = '%d' and uri = '%s' order by `cached` desc limit 1;",
 						$this->registry['db']->escape($this->user->getAccountId()),
 						$this->registry['db']->escape($uri));
