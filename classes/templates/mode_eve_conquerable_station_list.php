@@ -15,7 +15,7 @@ if (!class_exists("template_mode_eve_conquerable_station_list")) {
 			if ($showTemplate) {
 
 				$result = "<p>Conquerable Stations List</p>
-<table id=\"stations\">
+<table id='stations'>
 	<thead>
 		<tr>
 			<th>Station</th>
@@ -49,34 +49,24 @@ if (!class_exists("template_mode_eve_conquerable_station_list")) {
 				return \"<a class='.showCorp' href='\" + oObj.aData[2] +\"'>\"+ oObj.aData[3] + \"</a>\";
 			} }
 		],
-		\"aaSorting\": [[ 0, \"desc\" ]],
-		\"bJQueryUI\": true,
-		\"bProcessing\": true,
-		\"bServerSide\": true,
-		\"bSort\": true,
-		\"bAutoWidth\" : true,
-		\"sDom\": '<\"H\"Tfr>t<\"F\"ip>',
-		\"oTableTools\": {
-			\"aButtons\": [
-				\"copy\", \"csv\", \"xls\", \"pdf\",
-				{
-					\"sExtends\":    \"collection\",
-					\"sButtonText\": \"Save\",
-					\"aButtons\":    [ \"csv\", \"xls\", \"pdf\" ]
-				}
-			]
-		},
-		\"sPaginationType\": \"full_numbers\",
-		\"sAjaxSource\": \"backend.php\",
-		\"fnServerData\": function ( sSource, aoData, fnCallback ) {
-			aoData.push( { \"name\": \"call\", \"value\": \"mode_eve_conquerable_station_list\" } );
-			aoData.push( { \"name\": \"sender\", \"value\": \"datatables\" } );
+		'aaSorting': [[ 0, 'desc' ]],
+		'bJQueryUI': true,
+		'bProcessing': true,
+		'bServerSide': true,
+		'bSort': true,
+		'bAutoWidth' : true,
+		'sDom': '<\"H\"Tfr>t<\"F\"ip>',
+		'sPaginationType': 'full_numbers',
+		'sAjaxSource': 'backend.php',
+		'fnServerData': function ( sSource, aoData, fnCallback ) {
+			aoData.push( { 'name': 'call', 'value': 'mode_eve_conquerable_station_list' } );
+			aoData.push( { 'name': 'sender', 'value': 'datatables' } );
 			$.ajax( {
-				\"dataType\": 'json',
-				\"type\": \"POST\",
-				\"url\": sSource,
-				\"data\": aoData,
-				\"success\": fnCallback
+				'dataType': 'json',
+				'type': 'POST',
+				'url': sSource,
+				'data': aoData,
+				'success': fnCallback
 			} );
 			}
 		});
@@ -84,10 +74,9 @@ if (!class_exists("template_mode_eve_conquerable_station_list")) {
 		$('#stations a').live('click', function()
 		{
 			var aData = {
-				call: 'mode_corp_corporation_sheet',
 				corporationId: $(this).attr('href')
 			}
-			loadContentWithData(aData);
+			loadContent('mode_corp_corporation_sheet', aData);
 			return false;
 		});
 	}

@@ -12,13 +12,12 @@ if (!class_exists("template_sys_register_success")) {
 
 			extract($this->vars['data']);
 			$result = "<p>User registration</p>
-<div class='login'>
+<div class='form_data'>
 	Registration and login as '$username' success.
 </div>
 <script>
 	function bindContent()
 	{
-		updateMenuDefault();
 	}
 </script>";
 			return $result;

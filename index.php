@@ -21,7 +21,7 @@
 			</div>
 		</div>
 		<script type="text/javascript" >
-			function updateStatus()
+function updateStatus()
 {
 	$.ajax({
 		type: "POST",
@@ -30,50 +30,20 @@
 		data: "call=sys_status",
 		success: function(html) {
 			$("#status").html(html);
-			bindStatus();
 		}
 	});
 	return false;
 }
-function updateMenu()
-{
-	$.ajax({
-		type: "POST",
-		url: "backend.php",
-		cache: false,
-		data: "call=sys_menu&item=" + $(this).attr('href'),
-		success: function(html) {
-			$("#menu").html(html);
-			$("#menu a").bind("click", updateMenu);
-		}
-	});
-	loadContent($(this).attr('href'));
-	return false;
-}
-function updateMenuDefault()
-{
-	$.ajax({
-		type: "POST",
-		url: "backend.php",
-		cache: false,
-		data: "call=sys_menu",
-		success: function(html) {
-			$("#menu").html(html);
-			$("#menu a").bind("click", updateMenu);
-		}
-	});
-	return false;
-}
-function loadContent(modeName)
+function loadContent(modeName, params)
 {
 	var aData = {
 		call: modeName
 	}
-	loadContentWithData(aData);
-	return false;
-}
-function loadContentWithData(aData)
-{
+	if (typeof params == 'object')
+	{
+		aData = params;
+		aData['call'] = modeName;
+	}
 	$.ajax({
 		type: "POST",
 		url: "backend.php",
@@ -82,7 +52,22 @@ function loadContentWithData(aData)
 		success: function(html) {
 			$("#content").html(html);
 			bindContent();
+			loadMenu(modeName);
 			updateStatus();
+			//alert('loaded: ' + modeName);
+		}
+	});
+	return false;
+}
+function loadMenu(modeName)
+{
+	$.ajax({
+		type: "POST",
+		url: "backend.php",
+		cache: false,
+		data: "call=sys_menu&item=" + modeName,
+		success: function(html) {
+			$("#menu").html(html);
 		}
 	});
 	return false;
@@ -90,19 +75,20 @@ function loadContentWithData(aData)
 
 $(document).ready(function() {
 
-	loadContent('mode_about');
-
-	$.ajax({
-		type: "POST",
-		url: "backend.php",
-		cache: false,
-		data: "call=sys_menu&item=mode_about",
-		success: function(html) {
-			$("#menu").html(html);
-			$("#menu a").bind("click", updateMenu);
-		}
+	// bind menu calls
+	$('#menu a').live('click', function()
+	{
+		loadContent($(this).attr('href'));
+		return false;
+	});
+	// bind status calls
+	$('#status a').live('click', function()
+	{
+		loadContent($(this).attr('href'));
+		return false;
 	});
 
+	loadContent('mode_about');
 });
 		</script>
 	</body>

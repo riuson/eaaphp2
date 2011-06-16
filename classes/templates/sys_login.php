@@ -17,8 +17,8 @@ if (!class_exists("template_sys_login")) {
 				$msg = "";
 
 			$result = "<p>User login</p>
-<div class='login'>
-	<form id='form_login'>
+<div class='form_data'>
+	<form id='form_data'>
 		<fieldset>
 			<legend>Enter your login and password</legend>
 			<div>
@@ -33,7 +33,7 @@ if (!class_exists("template_sys_login")) {
 				<label><a href='mode_register'>Registration</a></label>
 				<input type='submit' value='Send'>
 			</div>
-			<div class='login_error'>
+			<div class='form_data_error'>
 				$msg
 			</div>
 		</fieldset>
@@ -41,22 +41,18 @@ if (!class_exists("template_sys_login")) {
 	<script>
 		function bindContent()
 		{
-			$(\"#form_login a\").bind(\"click\", doRegister);
-			$('#form_login').submit(function(){
-				var aData = {
-					call: 'sys_login',
-					username: $(\"#username\").val(),
-					password: $(\"#password\").val()
-				}
-				loadContentWithData(aData);
+			$('#form_data a').bind('click', function() {
+				loadContent('sys_register');
 				return false;
 			});
-			updateMenuDefault();
-		}
-		function doRegister()
-		{
-			loadContent('sys_register');
-			return false;
+			$('#form_data').submit(function(){
+				var aData = {
+					username: $('#username').val(),
+					password: $('#password').val()
+				}
+				loadContent('sys_login', aData);
+				return false;
+			});
 		}
 	</script>
 </div>";

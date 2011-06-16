@@ -31,8 +31,8 @@ if (!class_exists("template_sys_user")) {
 			}
 
 			$result = "<p>User account</p>
-<div class='login'>
-	<form id='form_login'>
+<div class='form_data'>
+	<form id='form_data'>
 		<fieldset>
 			<legend>Enter your account data</legend>
 			<div>
@@ -77,7 +77,7 @@ if (!class_exists("template_sys_user")) {
 				<input type='submit' value='Submit'>
 				<input type='reset' value='Reset'>
 			</div>
-			<div class='login_error'>
+			<div class='form_data_error'>
 				$msg
 			</div>
 			<div>
@@ -88,10 +88,9 @@ if (!class_exists("template_sys_user")) {
 	<script>
 		function bindContent()
 		{
-			$('#form_login a').bind('click', doSetupAccess);
-			$('#form_login').submit(function(){
+			$('#form_data a').bind('click', doSetupAccess);
+			$('#form_data').submit(function(){
 				var aData = {
-					call: 'sys_user',
 					login:  $('#login').val(),
 					password:  $('#password').val(),
 					email:  $('#email').val(),
@@ -102,10 +101,9 @@ if (!class_exists("template_sys_user")) {
 					characterId:  $('#characterId').val(),
 					master:  $('#master').val()
 				}
-				loadContentWithData(aData);
+				loadContent('sys_user', aData);
 				return false;
 			});
-			updateMenuDefault();
 			$('#masterMode').bind('click', switchToMaster);
 			$('#slaveMode').bind('click', switchToSlave);
 			initSwitch();

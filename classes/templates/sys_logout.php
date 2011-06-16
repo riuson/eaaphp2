@@ -12,7 +12,7 @@ if (!class_exists("template_sys_logout")) {
 
 			extract($this->vars);
 			$result = "<p>User logout</p>
-<div class='login'>";
+<div class='form_data'>";
 
 			if ($logoutSuccess) {
 				$result .= "Logout success.";
@@ -24,8 +24,6 @@ if (!class_exists("template_sys_logout")) {
 <script>
 	function bindContent()
 	{
-		updateStatus();
-		updateMenuDefault();
 	}
 </script>";
 			return $result;

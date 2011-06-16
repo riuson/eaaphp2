@@ -30,13 +30,13 @@ if (!class_exists("template_sys_access")) {
 
 			//print_r($limitedModes);
 			$result = "<p>Access settings</p>
-<div class='login'>
+<div class='form_data'>
 			<div class='left' id='users'>Slave users: $count<br>$usersListHtml</div>";
 
 			if ($count > 0) {
 
 				$result .= "
-	<form id='form_login'>
+	<form id='form_data'>
 		<fieldset>
 			<legend>Select character and access rights</legend>";
 
@@ -65,24 +65,22 @@ if (!class_exists("template_sys_access")) {
 	<script>
 		function bindContent()
 		{
-			$('#users a').bind(\"click\", switchUser);
-			$('#form_login').submit(function(){
+			$('#users a').bind('click', function() {
+				var aData = {
+					selectedUser: $(this).attr('href')
+				}
+				loadContent('sys_access', aData);
+				return false;
+			});
+			$('#form_data').submit(function(){
 				var aData = $(this).serializeArray();
 				aData.push( { name: 'call', value: 'sys_access' } );
 				aData.push( { name: 'submit', value: 'changes' } );
 				aData.push( { name: 'selectedUser', value: '$userLogin' } );
-				loadContentWithData(aData);
+
+				loadContent('sys_access', aData);
 				return false;
 			});
-		}
-		function switchUser()
-		{
-			var aData = {
-				call: 'sys_access',
-				selectedUser: $(this).attr('href')
-			}
-			loadContentWithData(aData);
-			return false;
 		}
 	</script>
 </div>";

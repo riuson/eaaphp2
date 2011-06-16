@@ -24,8 +24,8 @@ if (!class_exists("template_sys_register")) {
 				$initSwitch = "slave";
 
 			$result = "<p>User registration</p>
-<div class='login'>
-	<form id='form_login'>
+<div class='form_data'>
+	<form id='form_data'>
 		<fieldset>
 			<legend>Enter your account data</legend>
 			<div>
@@ -69,7 +69,7 @@ if (!class_exists("template_sys_register")) {
 				<label>&nbsp;</label>
 				<input type='submit' value='Send'>
 			</div>
-			<div class='login_error'>
+			<div class='form_data_error'>
 				$msg
 			</div>
 		</fieldset>
@@ -77,24 +77,22 @@ if (!class_exists("template_sys_register")) {
 	<script>
 		function bindContent()
 		{
-			$('#form_login').submit(function(){
+			$('#form_data').submit(function(){
 				var aData = {
-					call: 'sys_register',
-					username:  $('#username').val(),
-					password:  $('#password').val(),
-					email:  $('#email').val(),
+					username:       $('#username').val(),
+					password:       $('#password').val(),
+					email:          $('#email').val(),
 					characterName:  $('#characterName').val(),
-					apikeyOwner:  $('input:radio[name=apikeyOwner]:checked').val(),
-					userId:  $('#userId').val(),
-					apiKey:  $('#apiKey').val(),
-					characterId:  $('#characterId').val(),
-					masterName:  $('#masterName').val()
+					apikeyOwner:    $('input:radio[name=apikeyOwner]:checked').val(),
+					userId:         $('#userId').val(),
+					apiKey:         $('#apiKey').val(),
+					characterId:    $('#characterId').val(),
+					masterName:     $('#masterName').val()
 				}
-				loadContentWithData(aData);
-				});
-			updateMenuDefault();
-			$('#master').bind(\"click\", switchToMaster);
-			$('#slave').bind(\"click\", switchToSlave);
+				loadContent('sys_register', aData);
+			});
+			$('#master').bind('click', switchToMaster);
+			$('#slave').bind('click', switchToSlave);
 			initSwitch();
 		}
 		function switchToMaster()

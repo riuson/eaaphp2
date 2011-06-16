@@ -12,13 +12,12 @@ if (!class_exists("template_sys_login_success")) {
 
 			extract($this->vars);
 			$result = "<p>User login</p>
-<div class='login'>
+<div class='form_data'>
 	Login as '$username' success.
 </div>
 <script>
 	function bindContent()
 	{
-		updateMenuDefault();
 	}
 </script>";
 			return $result;

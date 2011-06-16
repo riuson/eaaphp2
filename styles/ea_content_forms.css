@@ -1,18 +1,18 @@
-.login fieldset {
+.form_data fieldset {
 	margin-top: 1em;
 	margin-right: 0pt;
 	margin-bottom: 1em;
 	margin-left: 0pt;
 	border: none;
 }
-.login legend {
+.form_data legend {
 	color: gray;
 	text-align: center;
 	width: 100%;
 	padding-bottom: 10pt;
 	font-weight: bold;
 }
-.login fieldset div
+.form_data fieldset div
 {
 	margin-bottom: 0.5em;
 	padding-top: 0pt;
@@ -21,7 +21,7 @@
 	padding-left: 0pt;
 	display: block;
 }
-.login fieldset label
+.form_data fieldset label
 {
 	float: left;
 	width: 100px;
@@ -32,11 +32,11 @@
 	text-align: right;
 	color: gray;
 }
-div.login {
+div.form_data {
 	display: table;
 }
 
-div.login_error
+div.form_data_error
 {
 	color: red;
 	text-align: center;

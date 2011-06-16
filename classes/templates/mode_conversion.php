@@ -27,8 +27,8 @@ if (!class_exists("template_mode_conversion")) {
 			}
 
 			$result = "<p>Character Id/Name</p>
-<div class='login'>
-	<form id='form_login'>
+<div class='form_data'>
+	<form id='form_data'>
 		<fieldset>
 			<legend>Enter characterId or characterName to search</legend>
 			<div>
@@ -55,13 +55,12 @@ if (!class_exists("template_mode_conversion")) {
 	<script>
 		function bindContent()
 		{
-			$('#form_login').submit(function(){
+			$('#form_data').submit(function(){
 				var aData = {
-					call: 'mode_conversion',
 					characterId:  $('#characterId').val(),
 					characterName:  $('#characterName').val()
 				}
-				loadContentWithData(aData);
+				loadContent('mode_conversion', aData);
 				return false;
 			});
 		}

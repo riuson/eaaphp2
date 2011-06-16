@@ -31,15 +31,6 @@ EVE Server: $server_online, $server_pilots pilot$suffix<br>
 $server_time<br>
 $user_info
 <script>
-	function bindStatus()
-	{
-		$(\"#status a\").bind(\"click\", doStatus);
-	}
-	function doStatus()
-	{
-		loadContent($(this).attr('href'));
-		return false;
-	}
 </script>";
 			return $result;
 		}

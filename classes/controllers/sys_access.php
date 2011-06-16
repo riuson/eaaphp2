@@ -24,9 +24,9 @@ if (!class_exists("controller_sys_access")) {
 			if (isset($_POST['submit']) && $_POST['submit'] == 'changes') {
 
 				if ($model->updateRights())
-					$updateMessage = "Access right updated";
+					$updateMessage = "Access rights updated";
 				else
-					$updateMessage = "Access right not updated";
+					$updateMessage = "Access rights not updated";
 			}
 
 			$model->prepare();
