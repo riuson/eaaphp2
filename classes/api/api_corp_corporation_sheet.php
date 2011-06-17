@@ -88,6 +88,7 @@ class Api_Corp_Corporation_Sheet Extends Api_Base {
 		$walletDivisions = array();
 
 		$this->registry['user']->getMasterData($userData);
+		$this->commonMethod = false;
 
 		$params = array();
 		$params['version'] = '2';
