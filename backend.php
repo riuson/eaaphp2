@@ -62,9 +62,11 @@ echo $router->delegate();
 
 // api testing
 
-//$api = new Api_Eve_CharacterName($registry, $user);
-//$api->getNames(array(797400947, 1188435724), $ids);
-//var_dump($ids);
+//$api = new Api_Corp_Corporation_Sheet($registry, $user);
+//$api->getCorporationInfoPrivate($commonInfo, $divisions, $walletDivisions);
+//print_r($commonInfo);
+//print_r($divisions);
+//print_r($walletDivisions);
 
 //echo $api->getErrorMessage();
 ?>
