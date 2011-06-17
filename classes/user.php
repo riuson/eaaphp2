@@ -94,7 +94,7 @@ class User {
 									$this->registry['db']->escape($password),
 									$this->registry['db']->escape($email),
 									$this->registry['db']->escape($userId),
-									$this->registry['db']->escape($apiKey),
+									$this->registry['db']->escape(base64_encode($this->registry['db']->rc4($apiKey))),
 									$this->registry['db']->escape($characterId),
 									$this->registry['db']->escape($characterName)
 					);
@@ -147,7 +147,7 @@ class User {
 									$this->registry['db']->escape($password),
 									$this->registry['db']->escape($email),
 									$this->registry['db']->escape($userId),
-									$this->registry['db']->escape($apiKey),
+									$this->registry['db']->escape(base64_encode($this->registry['db']->rc4($apiKey))),
 									$this->registry['db']->escape($characterId),
 									$this->registry['db']->escape($characterName),
 									$this->registry['db']->escape(implode(",", $modes)),
@@ -284,9 +284,13 @@ class User {
 					$data['password'] = $row['password'];
 					$data['userId'] = $row['userId'];
 					$data['apiKey'] = $row['apiKey'];
+					$data['apiKey'] = $this->registry['db']->rc4(base64_decode($data['apiKey']));
 					$data['characterId'] = $row['characterId'];
 					$result = true;
 				}
+			} else {
+
+				$data['apiKey'] = $this->registry['db']->rc4(base64_decode($data['apiKey']));
 			}
 		}
 		return $result;
