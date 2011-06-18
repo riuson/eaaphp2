@@ -143,7 +143,7 @@ if (!class_exists("template_mode_eve_conquerable_station_list")) {
 	<tr>
 		<td>Shares:
 		<td>$corpInfo[shares]
-<table>
+</table>
 ";
 			} else if ($show == 'datatable'){
 
