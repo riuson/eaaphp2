@@ -8,8 +8,9 @@ if (!class_exists("model_mode_eve_conquerable_station_list")) {
 	Class model_mode_eve_conquerable_station_list Extends Model_Base {
 
 		private $jsonOutput;
+		private $corpInfo;
 
-		function prepare() {
+		function prepareDataTable() {
 
 			$aColumns = array('stationName', 'solarSystemName', 'corporationId', 'corporationName');
 
@@ -137,6 +138,17 @@ if (!class_exists("model_mode_eve_conquerable_station_list")) {
 
 		public function getJsonOutput() {
 			return $this->jsonOutput;
+		}
+
+		public function prepareCorpInfo($corporationId) {
+
+			$api = new Api_Corp_Corporation_Sheet($this->registry, $this->registry['user']);
+			$api->getCorporationInfo($corporationId, $commonInfo);
+			$this->corpInfo = $commonInfo;
+		}
+
+		public function getCorpInfo() {
+			return $this->corpInfo;
 		}
 
 	}

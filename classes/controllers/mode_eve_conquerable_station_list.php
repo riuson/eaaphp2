@@ -21,18 +21,22 @@ if (!class_exists("controller_mode_eve_conquerable_station_list")) {
 
 		function process() {
 
-			$showTemplate = true;
 			if (isset($_POST['sender']) && $_POST['sender'] == "datatables") {
-				$showTemplate = false;
-			}
 
-			if (!$showTemplate) {
 				$model = new model_mode_eve_conquerable_station_list($this->registry);
-				$model->prepare();
+				$model->prepareDataTable();
+				$this->registry['template']->set('show', 'datatable');
 				$this->registry['template']->set('jsonOutput', $model->getJsonOutput());
-			}
+			} else if (isset($_POST['corporationId']) && is_numeric ($_POST['corporationId'])) {
 
-			$this->registry['template']->set('showTemplate', $showTemplate);
+				$model = new model_mode_eve_conquerable_station_list($this->registry);
+				$model->prepareCorpInfo($_POST['corporationId']);
+				$this->registry['template']->set('show', 'corpinfo');
+				$this->registry['template']->set('corpInfo', $model->getCorpInfo());
+			} else {
+
+				$this->registry['template']->set('show', 'template');
+			}
 			return $this->registry['template']->show('mode_eve_conquerable_station_list');
 		}
 

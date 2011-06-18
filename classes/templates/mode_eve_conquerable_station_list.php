@@ -12,7 +12,7 @@ if (!class_exists("template_mode_eve_conquerable_station_list")) {
 
 			extract($this->vars);
 
-			if ($showTemplate) {
+			if ($show == 'template') {
 
 				$result = "<p>Conquerable Stations List</p>
 <table id='stations'>
@@ -36,6 +36,8 @@ if (!class_exists("template_mode_eve_conquerable_station_list")) {
 		</tr>
 	</tfoot>
 </table>
+<div id='corpInfo'>
+</div>
 <script>
 	function bindContent()
 	{
@@ -74,15 +76,76 @@ if (!class_exists("template_mode_eve_conquerable_station_list")) {
 		$('#stations a').live('click', function()
 		{
 			var aData = {
+				call: 'mode_eve_conquerable_station_list',
 				corporationId: $(this).attr('href')
 			}
-			loadContent('mode_corp_corporation_sheet', aData);
+			$.ajax({
+				type: 'POST',
+				url: 'backend.php',
+				cache: false,
+				data: aData,
+				success: function(html) {
+					$('#corpInfo').html(html);
+				}
+			});
 			return false;
 		});
 	}
 </script>
 ";
-			} else {
+			} else if ($show == 'corpinfo'){
+/*
+	<tr>
+		<td>CorporationId
+		<td>$corpInfo[corporationId]
+	<tr>
+		<td>CeoId:
+		<td>$corpInfo[ceoId]
+	<tr>
+		<td>StationId:
+		<td>$corpInfo[stationId]
+	<tr>
+		<td>AllianceId:
+		<td>$corpInfo[allianceId]
+ */
+				$result = "
+<table>
+	<tr>
+		<td>CorporationName:
+		<td>$corpInfo[corporationName]
+	<tr>
+		<td>Ticker:
+		<td>$corpInfo[ticker]
+	<tr>
+		<td>CeoName:
+		<td>$corpInfo[ceoName]
+	<tr>
+		<td>StationName:
+		<td>$corpInfo[stationName]
+	<tr>
+		<td>Description:
+		<td>$corpInfo[description]
+	<tr>
+		<td>URL:
+		<td><a href='$corpInfo[url]'>$corpInfo[url]</a>
+	<tr>
+		<td>AllianceName:
+		<td>$corpInfo[allianceName]
+	<tr>
+		<td>Tax rate:
+		<td>$corpInfo[taxRate]
+	<tr>
+		<td>Member count:
+		<td>$corpInfo[memberCount]
+	<tr>
+		<td>Member limit:
+		<td>$corpInfo[memberLimit]
+	<tr>
+		<td>Shares:
+		<td>$corpInfo[shares]
+<table>
+";
+			} else if ($show == 'datatable'){
 
 				$result = $jsonOutput;
 			}
