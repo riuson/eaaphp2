@@ -15,8 +15,7 @@ class Api_Base {
 	// settings
 	protected $registry;
 	protected $user;
-
-
+	protected $commonMethod;
 	private $apiroot;
 	protected $document;
 	protected $showinfo;
@@ -27,6 +26,7 @@ class Api_Base {
 
 		$this->registry = $registry;
 		$this->user = $user;
+		$this->commonMethod = true;
 
 		$this->apiroot = "http://api.eve-online.com";
 		$this->showinfo = false;
@@ -165,8 +165,16 @@ class Api_Base {
 	private function checkCache($uri, &$cached, &$cachedUntil, &$mustGetFromCache, &$cachedValue) {
 
 		$recordExists = false;
+
+		if ($this->commonMethod)
+			$accountId = 0;
+		else {
+			$this->user->getMasterData($masterData);
+			$accountId = $masterData['accountId'];
+		}
+
 		$query = sprintf("select * from api_cache where accountId = '%d' and uri = '%s' order by `cached` desc limit 1;",
-						$this->registry['db']->escape($this->user->getAccountId()),
+						$this->registry['db']->escape($accountId),
 						$this->registry['db']->escape($uri));
 
 		$qr = $this->registry['db']->query($query);
@@ -207,6 +215,13 @@ class Api_Base {
 
 	private function saveToCache($uri, $serverResponse) {
 
+		if ($this->commonMethod)
+			$accountId = 0;
+		else {
+			$this->user->getMasterData($masterData);
+			$accountId = $masterData['accountId'];
+		}
+
 		$cachedStr = "?";
 		if (preg_match("/(?<=currentTime\>).*(?=\<\/currentTime)/", $serverResponse, $regs))
 			$cachedStr = $regs[0];
@@ -219,7 +234,7 @@ class Api_Base {
 
 		$query = sprintf("insert into api_cache (accountId, uri, cached, cachedUntil, cachedValue) " .
 						"values(%d, '%s', '%s', '%s', '%s');",
-						$this->user->getAccountId(),
+						$this->registry['db']->escape($accountId),
 						$this->registry['db']->escape($uri),
 						$this->registry['db']->escape($cachedStr),
 						$this->registry['db']->escape($cachedUntilStr),

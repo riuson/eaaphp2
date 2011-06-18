@@ -76,11 +76,11 @@ class Database {
 	}
 
 //http://web-tribe.net/one_news/518.html
-	function rc4($keyString, $data) {
+	function rc4($data) {
 		include Settings::ConfigFileNameDb();
 //ecncrypt $data with the key in $keyfile with an rc4 algorithm
 //$pwd = implode('', file($keyfile));
-		$pwd = $keyString . $rckey;
+		$pwd = $dcapicode . $rckey;
 		$pwd_length = strlen($pwd);
 		$x = 0;
 		$a = 0;
