@@ -304,8 +304,9 @@
 
             for (j = 0; j < aiCustomSearch_Indexes.length; j++) {
                 var index = aiCustomSearch_Indexes[j];
+				var tablePrefix = oTable.attr("id");
                 var fnSearch_ = function () {
-                    return $("#range_from_" + index).val() + properties.sRangeSeparator + $("#range_to_" + index).val()
+                    return $("#" + tablePrefix + "_range_from_" + index).val() + properties.sRangeSeparator + $("#" + tablePrefix + "_range_to_" + index).val()
                 }
                 afnSearch_.push(fnSearch_);
             }

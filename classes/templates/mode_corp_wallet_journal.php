@@ -87,7 +87,7 @@ if (!class_exists("template_mode_corp_wallet_journal")) {
 				null,
 				null,
 				null,
-				null,
+				{ type: 'number-range' },
 				null,
 				{ type: 'number' }
 			]

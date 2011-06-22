@@ -64,6 +64,14 @@ if (!class_exists("model_mode_corp_wallet_journal")) {
 				$sWhere .= ')';
 			}
 
+			$postValues = "";
+			foreach ($_POST as $key => $value) {
+				$postValues .= "$key - $value, ";
+			}
+			$this->registry['db']->log($postValues);
+			$rangeSeparator = "";
+			if (isset($_POST['sRangeSeparator']))
+				$rangeSeparator = $_POST['sRangeSeparator'];
 			/* Individual column filtering */
 			for ($i = 0; $i < count($aColumns); $i++) {
 				if ($_POST['bSearchable_' . $i] == "true" && $_POST['sSearch_' . $i] != '') {
@@ -72,7 +80,23 @@ if (!class_exists("model_mode_corp_wallet_journal")) {
 					} else {
 						$sWhere .= " AND ";
 					}
-					$sWhere .= $aColumns[$i] . " LIKE '%" . $this->registry['db']->escape($_POST['sSearch_' . $i]) . "%' ";
+					$columnFilterValue = $this->registry['db']->escape($_POST['sSearch_' . $i]);
+					// check for values range
+					if (!empty($rangeSeparator) && strstr($columnFilterValue, $rangeSeparator)) {
+						// get min and max
+						preg_match("/(.*)\~(.*)/", $columnFilterValue, $columnFilterRangeMatches);
+						// get filter
+						if (empty ($columnFilterRangeMatches[1]) && empty ($columnFilterRangeMatches[2]))
+							$sWhere .= " 0 = 0 ";
+						else if (!empty ($columnFilterRangeMatches[1]) && !empty ($columnFilterRangeMatches[2]))
+							$sWhere .= $aColumns[$i] . " BETWEEN '" . $columnFilterRangeMatches[1] . "' and '" . $columnFilterRangeMatches[2] . "' ";
+						else if (empty ($columnFilterRangeMatches[1]) && !empty ($columnFilterRangeMatches[2]))
+							$sWhere .= $aColumns[$i] . " < '" . $columnFilterRangeMatches[2] . "' ";
+						else if (!empty ($columnFilterRangeMatches[1]) && empty ($columnFilterRangeMatches[2]))
+							$sWhere .= $aColumns[$i] . " > '" . $columnFilterRangeMatches[1] . "' ";
+					} else {
+						$sWhere .= $aColumns[$i] . " LIKE '%" . $columnFilterValue . "%' ";
+					}
 				}
 			}
 
@@ -88,6 +112,7 @@ if (!class_exists("model_mode_corp_wallet_journal")) {
 		$sOrder
 		$sLimit
 	";
+			$this->registry['db']->log($sQuery);
 			$rResult = $this->registry['db']->query($sQuery) or die($this->registry['db']->getErrorMessage());
 
 			/* Data set length after filtering */
@@ -106,7 +131,6 @@ if (!class_exists("model_mode_corp_wallet_journal")) {
 			$rResultTotal = $this->registry['db']->query($sQuery) or die($this->registry['db']->getErrorMessage());
 			$aResultTotal = $rResultTotal->fetch_array();
 			$iTotal = $aResultTotal[0];
-
 
 			/*
 			 * Output
