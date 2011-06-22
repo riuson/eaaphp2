@@ -138,7 +138,17 @@ class Database {
 	}
 
 	public function getAffectedRows() {
-	 return $this->affectedRows;
+		return $this->affectedRows;
+	}
+
+	function log($message) {
+		$t = time(); // - $t;
+		$strtime = date("Y-m-d H:i:s", $t);
+
+		$query = sprintf("insert into api_errors_log (_date_, message) values ('%s', '%s');",
+						$this->db_link->real_escape_string($strtime),
+						$this->db_link->real_escape_string($message));
+		$this->db_link->query($query);
 	}
 
 }
