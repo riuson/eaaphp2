@@ -335,24 +335,6 @@
                             fnCallback(json)
                         });
                     }
-
-                    /*
-                    if (fnServerDataOriginal != null) {
-                    if (properties.iDelay != 0) {
-                    if (oFunctionTimeout != null)
-                    window.clearTimeout(oFunctionTimeout);
-                    oFunctionTimeout = window.setTimeout(function () {
-                    fnServerDataOriginal(sSource, aoData, fnCallback);
-                    }, properties.iDelay);
-                    } else {
-                    fnServerDataOriginal(sSource, aoData, fnCallback);
-                    }
-                    }
-                    else
-                    $.getJSON(sSource, aoData, function (json) {
-                    fnCallback(json)
-                    });
-                    */
                 };
 
             }
