@@ -82,16 +82,22 @@ if (!class_exists("template_mode_corp_wallet_journal")) {
 			aoColumns: [
 				{ type: 'select', values: [ '1000', '1001', '1002', '1003', '1004', '1005', '1006']  },
 				null,
-				null,
-				null,
-				null,
-				null,
-				null,
+				{ type: 'date-range' },
+				{ type: 'text' },
+				{ type: 'text' },
+				{ type: 'text' },
+				{ type: 'text' },
 				{ type: 'number-range' },
 				null,
 				{ type: 'number' }
 			]
 		});
+		$.datepicker.setDefaults({
+		dateFormat: 'yy-mm-dd',
+		   showOn: 'both',
+		   buttonImageOnly: true,
+		   buttonImage: 'calendar.gif',
+		   buttonText: 'Calendar' });
 	}
 </script>
 ";

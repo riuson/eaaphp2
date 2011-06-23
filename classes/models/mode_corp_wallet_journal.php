@@ -11,7 +11,7 @@ if (!class_exists("model_mode_corp_wallet_journal")) {
 
 		function prepare() {
 
-			$aColumns = array('accountKey', 'refId', '_date_', 'refTypeId', 'ownerName1', 'ownerName2', 'argName1', 'amount', 'balance', 'reason');
+			$aColumns = array('accountKey', 'refId', '_date_', 'refTypeName', 'ownerName1', 'ownerName2', 'argName1', 'amount', 'balance', 'reason');
 
 			/* Indexed column (used for fast and accurate table cardinality) */
 			$sIndexColumn = "recordId";
@@ -107,7 +107,7 @@ if (!class_exists("model_mode_corp_wallet_journal")) {
 			 */
 			$sQuery = "
 		SELECT SQL_CALC_FOUND_ROWS " . str_replace(" , ", " ", implode(", ", $aColumns)) . "
-		FROM   $sTable
+		FROM   $sTable LEFT JOIN api_reftypes on (api_wallet_journal.refTypeId = api_reftypes.refTypeId)
 		$sWhere
 		$sOrder
 		$sLimit
@@ -126,7 +126,7 @@ if (!class_exists("model_mode_corp_wallet_journal")) {
 			/* Total data set length */
 			$sQuery = "
 		SELECT COUNT(" . $sIndexColumn . ")
-		FROM   $sTable
+		FROM   $sTable LEFT JOIN api_reftypes on (api_wallet_journal.refTypeId = api_reftypes.refTypeId)
 	";
 			$rResultTotal = $this->registry['db']->query($sQuery) or die($this->registry['db']->getErrorMessage());
 			$aResultTotal = $rResultTotal->fetch_array();
