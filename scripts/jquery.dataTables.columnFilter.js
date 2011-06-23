@@ -168,7 +168,8 @@
 
 	            var dEndDate = to.datepicker("getDate");
 
-	            var dCellDate = $.datepicker.parseDate($.datepicker.regional[""].dateFormat, aData[index]);
+	            //var dCellDate = $.datepicker.parseDate($.datepicker.regional[""].dateFormat, aData[index]);
+	            var dCellDate = $.datepicker.parseDate("yy-mm-dd", aData[index]);
 
 	            if (dCellDate == null)
 	                return false;
