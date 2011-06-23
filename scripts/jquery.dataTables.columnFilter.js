@@ -305,9 +305,8 @@
 
             for (j = 0; j < aiCustomSearch_Indexes.length; j++) {
                 var index = aiCustomSearch_Indexes[j];
-				var tablePrefix = oTable.attr("id");
-                var fnSearch_ = function () {
-                    return $("#" + tablePrefix + "_range_from_" + index).val() + properties.sRangeSeparator + $("#" + tablePrefix + "_range_to_" + index).val()
+				var fnSearch_ = function (fieldIndex) {
+                    return $("#" + oTable.attr("id") + "_range_from_" + fieldIndex).val() + properties.sRangeSeparator + $("#" + oTable.attr("id") + "_range_to_" + fieldIndex).val();
                 }
                 afnSearch_.push(fnSearch_);
             }
@@ -323,7 +322,7 @@
 
                         for (k = 0; k < aoData.length; k++) {
                             if (aoData[k].name == "sSearch_" + index)
-                                aoData[k].value = afnSearch_[j]();
+                                aoData[k].value = afnSearch_[j](index);
                         }
                     }
                     aoData.push({ "name": "sRangeSeparator", "value": properties.sRangeSeparator });
