@@ -67,11 +67,11 @@ class Datatables_Common {
 			$sWhere .= ')';
 		}
 
-		$postValues = "";
-		foreach ($_POST as $key => $value) {
-			$postValues .= "$key - $value, ";
-		}
-		$this->registry['db']->log($postValues);
+		//$postValues = "";
+		//foreach ($_POST as $key => $value) {
+		//	$postValues .= "$key - $value, ";
+		//}
+		//$this->registry['db']->log($postValues);
 		$rangeSeparator = "";
 		if (isset($_POST['sRangeSeparator']))
 			$rangeSeparator = $_POST['sRangeSeparator'];

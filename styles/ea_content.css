@@ -12,3 +12,7 @@ div.left {
 	float:left;
 	display: table;
 }
+#content .cell-comment
+{
+	color: darkgray;
+}
