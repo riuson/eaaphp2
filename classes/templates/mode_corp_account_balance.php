@@ -38,7 +38,7 @@ if (!class_exists("template_mode_corp_account_balance")) {
 	function bindContent()
 	{
 		$('#balance').dataTable( {
-		'aaSorting': [[ 0, 'desc' ]],
+		'aaSorting': [[ 0, 'asc' ]],
 		'bJQueryUI': true,
 		'bProcessing': true,
 		'bServerSide': true,
