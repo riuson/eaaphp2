@@ -7,9 +7,11 @@
 class Datatables_Common {
 
 	private $registry;
+	private $accountFilter;
 
-	function __construct($registry) {
+	function __construct($registry, $accountFilter = "") {
 		$this->registry = $registry;
+		$this->accountFilter = $accountFilter;
 	}
 
 	function process($sIndexColumn, $aColumns, $sTable, $joinCondition = '') {
@@ -101,6 +103,16 @@ class Datatables_Common {
 					$sWhere .= $aColumns[$i] . " LIKE '%" . $columnFilterValue . "%' ";
 				}
 			}
+		}
+		// Additional filter by user acccount id
+		if (!empty($this->accountFilter)) {
+
+			if ($sWhere == "") {
+				$sWhere = "WHERE ";
+			} else {
+				$sWhere .= " AND ";
+			}
+			$sWhere .= " accountId = " . $this->accountFilter . " ";
 		}
 
 

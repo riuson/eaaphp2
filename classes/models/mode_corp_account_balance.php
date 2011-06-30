@@ -11,6 +11,7 @@ if (!class_exists("model_mode_corp_account_balance")) {
 
 		function prepare() {
 
+			$this->registry['user']->getMasterData($data);
 
 			$aColumns = array('accountKey', 'balance', 'balanceUpdated');
 
@@ -21,7 +22,7 @@ if (!class_exists("model_mode_corp_account_balance")) {
 			$sTable = "api_account_balance";
 			$joinCondition = "";
 
-			$data = new Datatables_Common($this->registry);
+			$data = new Datatables_Common($this->registry, $data['accountId']);
 			$this->jsonOutput = $data->process($sIndexColumn, $aColumns, $sTable, $joinCondition);
 		}
 

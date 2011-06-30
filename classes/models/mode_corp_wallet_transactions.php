@@ -11,6 +11,8 @@ if (!class_exists("model_mode_corp_wallet_transactions")) {
 
 		function prepare() {
 
+			$this->registry['user']->getMasterData($data);
+
 			$aColumns = array('accountKey', 'transId', '_date_', 'typeName', 'quantity', 'price', 'characterName', 'clientName', 'stationName', 'transactionType');
 
 			/* Indexed column (used for fast and accurate table cardinality) */
@@ -20,7 +22,7 @@ if (!class_exists("model_mode_corp_wallet_transactions")) {
 			$sTable = "api_wallet_transactions";
 			//$joinCondition = "LEFT JOIN api_reftypes on (api_wallet_journal.refTypeId = api_reftypes.refTypeId)";
 
-			$data = new Datatables_Common($this->registry);
+			$data = new Datatables_Common($this->registry, $data['accountId']);
 			$this->jsonOutput = $data->process($sIndexColumn, $aColumns, $sTable);//, $joinCondition);
 		}
 
