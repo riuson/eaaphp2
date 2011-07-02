@@ -7,9 +7,11 @@
 class Datatables_Common {
 
 	private $registry;
+	private $accountFilter;
 
-	function __construct($registry) {
+	function __construct($registry, $accountFilter = "") {
 		$this->registry = $registry;
+		$this->accountFilter = $accountFilter;
 	}
 
 	function process($sIndexColumn, $aColumns, $sTable, $joinCondition = '') {
@@ -102,6 +104,16 @@ class Datatables_Common {
 				}
 			}
 		}
+		// Additional filter by user acccount id
+		if (!empty($this->accountFilter)) {
+
+			if ($sWhere == "") {
+				$sWhere = "WHERE ";
+			} else {
+				$sWhere .= " AND ";
+			}
+			$sWhere .= " $sTable.accountId = " . $this->accountFilter . " ";
+		}
 
 
 		/*
@@ -127,9 +139,10 @@ class Datatables_Common {
 
 		/* Total data set length */
 		$sQuery = "
-		SELECT COUNT(" . $sIndexColumn . ")
+		SELECT COUNT(" . $sTable . "." . $sIndexColumn . ")
 		FROM   $sTable $joinCondition
 	";
+		//$this->registry['db']->log($this->registry['db']->getErrorMessage());
 		$rResultTotal = $this->registry['db']->query($sQuery) or die($this->registry['db']->getErrorMessage());
 		$aResultTotal = $rResultTotal->fetch_array();
 		$iTotal = $aResultTotal[0];
@@ -148,12 +161,14 @@ class Datatables_Common {
 		while ($aRow = $rResult->fetch_array()) {
 			$row = array();
 			for ($i = 0; $i < count($aColumns); $i++) {
-				if ($aColumns[$i] == "version") {
-					/* Special output formatting for 'version' column */
-					$row[] = ($aRow[$aColumns[$i]] == "0") ? '-' : $aRow[$aColumns[$i]];
-				} else if ($aColumns[$i] != ' ') {
+				if ($aColumns[$i] != ' ') {
+					$aColArray = explode(".", $aColumns[$i]);
+					if (count($aColArray) == 1)
+						$columnName = $aColArray[0];
+					else
+						$columnName = $aColArray[1];
 					/* General output */
-					$row[] = $aRow[$aColumns[$i]];
+					$row[] = $aRow[$columnName];
 				}
 			}
 			$output['aaData'][] = $row;
