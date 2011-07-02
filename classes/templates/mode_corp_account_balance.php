@@ -19,6 +19,7 @@ if (!class_exists("template_mode_corp_account_balance")) {
 	<thead>
 		<tr>
 			<th>Account Key</th>
+			<th>Division</th>
 			<th>Balance</th>
 			<th>Updated</th>
 		</tr>
@@ -29,6 +30,7 @@ if (!class_exists("template_mode_corp_account_balance")) {
 	<tfoot>
 		<tr>
 			<th>Account Key</th>
+			<th>Division</th>
 			<th>Balance</th>
 			<th>Updated</th>
 		</tr>
