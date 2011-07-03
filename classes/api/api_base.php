@@ -207,7 +207,7 @@ class Api_Base {
 	private function cleanOldCache() {
 
 		$oltTime = date("Y-m-d H:i:s", strtotime("-2 day"));
-		$query = sprintf("delete from api_cache where cached < '%s';",
+		$query = sprintf("delete from api_cache where cachedUntil < '%s';",
 						$this->registry['db']->escape($oltTime));
 		//$this->writeDebugMsg($query);
 		$this->registry['db']->query($query);
