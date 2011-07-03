@@ -22,10 +22,13 @@ class Api_Base {
 	protected $updateFromCache;
 	protected $errorMessage;
 
-	public function __construct($registry, $user) {
+	public function __construct($registry, $user = null) {
 
 		$this->registry = $registry;
-		$this->user = $user;
+		if ($user == null)
+			$this->user = $registry['user'];
+		else
+			$this->user = $user;
 		$this->commonMethod = true;
 
 		$this->apiroot = "http://api.eve-online.com";

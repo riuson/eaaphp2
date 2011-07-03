@@ -21,7 +21,7 @@ if (!class_exists("model_mode_conversion")) {
 				$this->data['characterId'] = $_POST['characterId'];
 				if (preg_match("/^[\d]+$/", $_POST['characterId'])) {
 
-					$api = new Api_Eve_CharacterName($this->registry, $this->registry['user']);
+					$api = new Api_Eve_CharacterName($this->registry);
 					if ($api->getNames(array($this->data['characterId']), $names)) {
 
 						if (!empty($names)) {
@@ -38,7 +38,7 @@ if (!class_exists("model_mode_conversion")) {
 				$this->data['characterName'] = $_POST['characterName'];
 				if (preg_match("/^[a-zA-Z\d\ \"\']+$/", $_POST['characterName'])) {
 
-					$api = new Api_Eve_CharacterId($this->registry, $this->registry['user']);
+					$api = new Api_Eve_CharacterId($this->registry);
 					if ($api->getIds(array($this->data['characterName']), $ids)) {
 
 						if (!empty($ids)) {

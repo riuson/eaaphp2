@@ -27,7 +27,7 @@ if (!class_exists("model_mode_eve_conquerable_station_list")) {
 
 		public function prepareCorpInfo($corporationId) {
 
-			$api = new Api_Corp_Corporation_Sheet($this->registry, $this->registry['user']);
+			$api = new Api_Corp_Corporation_Sheet($this->registry);
 			$api->getCorporationInfo($corporationId, $commonInfo);
 			$this->corpInfo = $commonInfo;
 		}

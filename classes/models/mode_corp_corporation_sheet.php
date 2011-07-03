@@ -13,7 +13,7 @@ if (!class_exists("model_mode_corp_corporation_sheet")) {
 
 		function prepare() {
 
-			$api = new Api_Corp_Corporation_Sheet($this->registry, $this->registry['user']);
+			$api = new Api_Corp_Corporation_Sheet($this->registry);
 			$api->getCorporationInfoPrivate($commonInfo, $divisions, $walletDivisions);
 			$this->corpInfo = $commonInfo;
 			$this->divisions = $divisions;
